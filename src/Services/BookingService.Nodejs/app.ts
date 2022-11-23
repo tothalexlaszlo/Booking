@@ -8,20 +8,58 @@ import { BookingService } from "./services/booking.service";
 const debug = require('debug')('my express app');
 const app = express();
 
+app.use(express.json())
+
 try{
     AppDataSource.initialize();
-} catch(error: unknown) {
+} catch(error) {
     console.error("Error ininializin data source:", error)
 }
 
 const bookingService = new BookingService();
 
-app.use("/booking", async (req, res) =>{
+app.get("/booking", async (req, res) =>{
     try{
-        await bookingService.getUserBookings(req.query);
-        res.send()
-    } catch(error: unknown) {
-        console.error("Error ininializing data source:", error)
+        let userId = parseInt(req.query.userId.toString());
+
+        if (isNaN(userId)) {
+            res.status(400).send("userId parameter was missing or in incorrect format.");
+        }
+
+        let userBookings = await bookingService.getUserBookings(userId);
+
+        if (userBookings.length) {
+            res.status(200).send(userBookings);
+        } else {
+            res.status(204).send();
+        }
+    } catch(error) {
+        res.status(400).send("Error occured during fetching the requested resource.");
+    }
+});
+
+app.delete("/booking", async (req, res) =>{
+    try{
+        let bookingId = parseInt(req.query.bookingId.toString());
+
+        if (isNaN(bookingId)) {
+            res.status(400).send("bookingId parameter was missing or in incorrect format.");
+        }
+
+        await bookingService.cancelBooking(bookingId);
+        res.status(200).send("Booking successfully cancelled.");
+
+    } catch(error) {
+        res.status(400).send(error.message);
+    }
+});
+
+app.post("/booking", async (req, res) =>{
+    try{
+        await bookingService.bookParkingSlot(req.body.userId,
+                req.body.startDate, req.body.endDate);
+    } catch(error) {
+        res.status(400).send(error.message);
     }
 });
 

@@ -26,7 +26,7 @@ export class BookingService {
 
         if (startDate.getTime() + 60 * 60 * 1000 > endDate.getTime()
             || endDate.getTime() - startDate.getTime() > this._maximumAllowedBookingPeriod){
-                return Promise.reject("Invalid start or end date of requested booking");
+                throw new Error("Invalid start or end date of requested booking");
             }
 
         let parkingSlots = await this._parkingSlotRepository.find();
@@ -46,7 +46,7 @@ export class BookingService {
 
         if (!freeSlots.length)
         {
-            return Promise.reject("No free parking spots found");
+            throw new Error("No free parking spots found");
         }
 
         let booking = new Booking();
