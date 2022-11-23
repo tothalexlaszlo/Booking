@@ -2,16 +2,28 @@ import "reflect-metadata";
 
 import * as express from 'express';
 import { AddressInfo } from "net";
-import * as path from 'path';
-import { createConnection } from "typeorm";
-
-createConnection().then(
-
-);
+import { AppDataSource } from "./data/data-source";
+import { BookingService } from "./services/booking.service";
 
 const debug = require('debug')('my express app');
 const app = express();
 
+try{
+    AppDataSource.initialize();
+} catch(error: unknown) {
+    console.error("Error ininializin data source:", error)
+}
+
+const bookingService = new BookingService();
+
+app.use("/booking", async (req, res) =>{
+    try{
+        await bookingService.getUserBookings(req.query);
+        res.send()
+    } catch(error: unknown) {
+        console.error("Error ininializing data source:", error)
+    }
+});
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
