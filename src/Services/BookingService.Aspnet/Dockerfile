@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["BookingService.Aspnet/BookingService.Aspnet.csproj", "BookingService.Aspnet/"]
-RUN dotnet restore "BookingService.Aspnet/BookingService.Aspnet.csproj"
+COPY ["src/Services/BookingService.Aspnet/BookingService.Aspnet.csproj", "src/Services/BookingService.Aspnet/"]
+RUN dotnet restore "src/Services/BookingService.Aspnet/BookingService.Aspnet.csproj"
 COPY . .
-WORKDIR "/src/BookingService.Aspnet"
+WORKDIR "/src/src/Services/BookingService.Aspnet"
 RUN dotnet build "BookingService.Aspnet.csproj" -c Release -o /app/build
 
 FROM build AS publish

@@ -25,7 +25,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, n
     public virtual void Delete(int id)
     {
         var entityToDelete = _dbSet.Find(id);
-        if (entityToDelete is  null)
+        if (entityToDelete is  not null)
         {
             Delete(entityToDelete);
         }
