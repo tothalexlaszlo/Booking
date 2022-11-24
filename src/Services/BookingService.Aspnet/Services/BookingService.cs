@@ -19,7 +19,7 @@ public sealed class BookingService
     public async Task<List<Booking>> GetActiveBookingsByUserAsync(int userId) =>
         await _bookingRepository.FindAllByAsync(booking => booking.UserId == userId && booking.EndDate > DateTime.UtcNow);
 
-    public async Task BookParkingSlotAsync(int userId, DateTime startDate, DateTime endDate)
+    public async Task<Booking> BookParkingSlotAsync(int userId, DateTime startDate, DateTime endDate)
     {
         if (startDate + TimeSpan.FromHours(1) > endDate || endDate - startDate > _maximumAllowedBookingPeriod)
         {
@@ -48,6 +48,8 @@ public sealed class BookingService
         };
 
         _bookingRepository.Add(booking);
+
+        return booking;
     }
 
     public void CancelBooking(int bookingId) => _bookingRepository.Delete(bookingId);
