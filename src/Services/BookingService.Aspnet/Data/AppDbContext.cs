@@ -9,8 +9,8 @@ public class AppDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Booking> Categories { get; set; }
-    public virtual DbSet<ParkingSlot> Products { get; set; }
+    public virtual DbSet<Booking> Bookings { get; set; }
+    public virtual DbSet<ParkingSlot> ParkingSlots { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

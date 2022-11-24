@@ -1,5 +1,3 @@
-using BookingService.Aspnet.Interfaces;
-
 namespace BookingService.Aspnet.Models;
 
 public class Booking
