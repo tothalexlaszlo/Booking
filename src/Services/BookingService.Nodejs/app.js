@@ -13,7 +13,7 @@ require("reflect-metadata");
 const express = require("express");
 const data_source_1 = require("./data/data-source");
 const booking_service_1 = require("./services/booking.service");
-const grpc = require("@grpc/grpc-js");
+const grpc_js_1 = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
 const debug = require('debug')('my express app');
 const app = express();
@@ -24,18 +24,8 @@ try {
 catch (error) {
     console.error("Error ininializin data source:", error);
 }
-var PROTO_PATH = __dirname + '/../../Shared/protos/booking.proto';
-var packageDefinition = protoLoader.loadSync(PROTO_PATH, {
-    keepCase: true,
-    longs: String,
-    enums: String,
-    defaults: true,
-    oneofs: true
-});
-var protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
-var routeguide = protoDescriptor.routeguide;
-const Server = new grpc.Server();
 const bookingService = new booking_service_1.BookingService();
+const grpcServer = getGrpcServer();
 app.get("/booking", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let userId = parseInt(req.query.userId.toString());
@@ -106,4 +96,20 @@ app.set('port', process.env.PORT || 3000);
 const server = app.listen(app.get('port'), function () {
     debug(`Express server listening on port ${server.address().port}`);
 });
+function getGrpcServer() {
+    let PROTO_PATH = __dirname + '/../../Shared/protos/booking.proto';
+    let packageDefinition = protoLoader.loadSync(PROTO_PATH, {
+        keepCase: false,
+        longs: String,
+        enums: String,
+        defaults: true,
+        oneofs: true
+    });
+    let protoDescriptor = (0, grpc_js_1.loadPackageDefinition)(packageDefinition);
+    let bookingService = protoDescriptor.booking;
+    let server = new grpc_js_1.Server();
+    //server.addService(bookingService.GrpcBookingService.service, {
+    //    })
+    return server;
+}
 //# sourceMappingURL=app.js.map

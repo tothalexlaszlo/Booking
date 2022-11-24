@@ -1,4 +1,4 @@
-﻿import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ParkingSlot } from "./parking-slot";
 
 
@@ -10,7 +10,7 @@ export class Booking {
     @Column()
     userId: number;
 
-    @OneToOne(() => ParkingSlot, (slot) => slot.id)
+    @OneToOne(() => ParkingSlot, (slot) => slot.id, { nullable: false, onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     @JoinColumn()
     parkingSlotId: number;
 

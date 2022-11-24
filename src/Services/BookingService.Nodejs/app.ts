@@ -18,23 +18,9 @@ try{
     console.error("Error ininializin data source:", error)
 }
 
-var PROTO_PATH = __dirname + '/../../Shared/protos/booking.proto';
-var packageDefinition = protoLoader.loadSync(
-    PROTO_PATH,
-    {
-        keepCase: true,
-        longs: String,
-        enums: String,
-        defaults: true,
-        oneofs: true
-    });
-
-var protoDescriptor = loadPackageDefinition(packageDefinition);
-var routeguide = protoDescriptor.routeguide;
-
-const grpcServer = new Server();
-
 const bookingService = new BookingService();
+
+const grpcServer = getGrpcServer();
 
 app.get("/booking", async (req, res) =>{
     try{
@@ -117,3 +103,26 @@ app.set('port', process.env.PORT || 3000);
 const server = app.listen(app.get('port'), function () {
     debug(`Express server listening on port ${(server.address() as AddressInfo).port}`);
 });
+
+function getGrpcServer(): Server {
+    let PROTO_PATH = __dirname + '/../../Shared/protos/booking.proto';
+    let packageDefinition = protoLoader.loadSync(
+        PROTO_PATH,
+        {
+            keepCase: false,
+            longs: String,
+            enums: String,
+            defaults: true,
+            oneofs: true
+        });
+
+    let protoDescriptor = loadPackageDefinition(packageDefinition);
+    let bookingService = protoDescriptor.booking;
+
+    let server = new Server();
+    //server.addService(bookingService.GrpcBookingService.service, {
+
+    //    })
+
+    return server;
+}

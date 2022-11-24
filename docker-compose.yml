@@ -8,11 +8,11 @@ services:
       MSSQL_PID: Express
     ports:  
       - 1433:1433
-  aspnet-web:
-    depends_on:
-      - ms-sql-server
-    build:
-      context: .
-      dockerfile: src/Services/BookingService.Aspnet/Dockerfile
-    ports:
-      - "8000:5000"
+  #aspnet-web:
+  #  depends_on:
+  #    - ms-sql-server
+  #  build:
+  #    context: .
+  #    dockerfile: src/Services/BookingService.Aspnet/Dockerfile
+  #  ports:
+  #    - "8000:5000"

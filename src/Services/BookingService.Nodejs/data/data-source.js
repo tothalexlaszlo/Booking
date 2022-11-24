@@ -7,14 +7,17 @@ const parking_slot_1 = require("../models/parking-slot");
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "mssql",
     host: "localhost",
-    port: 3333,
-    username: "test",
-    password: "test",
-    database: "test",
+    port: 1433,
+    username: "SA",
+    password: "Password1234",
+    database: "Booking",
     synchronize: true,
     logging: true,
     entities: [booking_1.Booking, parking_slot_1.ParkingSlot],
     subscribers: [],
-    migrations: []
+    migrations: [],
+    extra: {
+        trustServerCertificate: true
+    }
 });
 //# sourceMappingURL=data-source.js.map
