@@ -4,6 +4,8 @@ import * as express from 'express';
 import { AddressInfo } from "net";
 import { AppDataSource } from "./data/data-source";
 import { BookingService } from "./services/booking.service";
+import { Server, loadPackageDefinition } from "@grpc/grpc-js";
+import * as protoLoader from "@grpc/proto-loader";
 
 const debug = require('debug')('my express app');
 const app = express();
@@ -15,6 +17,22 @@ try{
 } catch(error) {
     console.error("Error ininializin data source:", error)
 }
+
+var PROTO_PATH = __dirname + '/../../Shared/protos/booking.proto';
+var packageDefinition = protoLoader.loadSync(
+    PROTO_PATH,
+    {
+        keepCase: true,
+        longs: String,
+        enums: String,
+        defaults: true,
+        oneofs: true
+    });
+
+var protoDescriptor = loadPackageDefinition(packageDefinition);
+var routeguide = protoDescriptor.routeguide;
+
+const grpcServer = new Server();
 
 const bookingService = new BookingService();
 
