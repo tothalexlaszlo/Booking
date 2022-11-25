@@ -3,7 +3,7 @@ using BookingService.Aspnet.Models;
 
 namespace BookingService.Aspnet.Services;
 
-public class ParkingSlotService
+internal class ParkingSlotService
 {
     private readonly IRepository<ParkingSlot> _parkingSlotRepository;
 

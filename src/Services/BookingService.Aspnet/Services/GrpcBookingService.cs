@@ -1,10 +1,11 @@
+using BookingService.Aspnet.Models;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.BookingService;
 using Grpc.Core;
 
 namespace BookingService.Aspnet.Services;
 
-public class GrpcBookingService : Grpc.BookingService.GrpcBookingService.GrpcBookingServiceBase
+internal sealed class GrpcBookingService : Grpc.BookingService.GrpcBookingService.GrpcBookingServiceBase
 {
     private readonly ILogger<GrpcBookingService> _logger;
     private readonly BookingService _bookingService;
@@ -20,6 +21,13 @@ public class GrpcBookingService : Grpc.BookingService.GrpcBookingService.GrpcBoo
     public override async Task<BookingsByUserReply> GetActiveBookingsByUser(BookingsByUserRequest request, ServerCallContext context)
     {
         var activeBookingsForUser = await _bookingService.GetActiveBookingsByUserAsync(request.UserId);
+        var reply = await CreateBookingsByUserReply(activeBookingsForUser);
+
+        return reply;
+    }
+
+    private async Task<BookingsByUserReply> CreateBookingsByUserReply(List<Booking> activeBookingsForUser)
+    {
         var reply = new BookingsByUserReply();
 
         foreach (var activeBooking in activeBookingsForUser)
@@ -40,7 +48,12 @@ public class GrpcBookingService : Grpc.BookingService.GrpcBookingService.GrpcBoo
     public override async Task<BookingReply> BookParkingSlot(BookingRequest request, ServerCallContext context)
     {
         var booking = await _bookingService.BookParkingSlotAsync(request.UserId, request.StartDate.ToDateTime(), request.EndDate.ToDateTime());
+        var reply = await CreateBookingReply(booking);
+        return reply;
+    }
 
+    private async Task<BookingReply> CreateBookingReply(Booking booking)
+    {
         return new BookingReply()
         {
             BookingId = booking.Id,

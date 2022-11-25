@@ -4,7 +4,7 @@ using BookingService.Aspnet.Models;
 
 namespace BookingService.Aspnet.Services;
 
-public sealed class BookingService
+internal sealed class BookingService
 {
     private readonly TimeSpan _maximumAllowedBookingPeriod = TimeSpan.FromHours(12);
     private readonly IRepository<Booking> _bookingRepository;
