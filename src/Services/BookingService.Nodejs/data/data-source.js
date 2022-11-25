@@ -13,7 +13,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     database: "Booking",
     synchronize: true,
     logging: true,
-    entities: [booking_1.Booking, parking_slot_1.ParkingSlot],
+    entities: [parking_slot_1.ParkingSlot, booking_1.Booking],
     subscribers: [],
     migrations: [],
     extra: {

@@ -4,6 +4,8 @@ import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "Grpc.BookingService";
 
+package booking;
+
 service GrpcBookingService {
   rpc BookParkingSlot (BookingRequest) returns (BookingReply);
   rpc CancelBooking(CancelBookingRequest) returns (CancelBookingReply);

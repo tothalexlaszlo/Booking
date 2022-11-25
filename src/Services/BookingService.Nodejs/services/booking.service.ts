@@ -14,7 +14,7 @@ export class BookingService {
 
     }
 
-    async getUserBookings(userId: number): Promise<Booking[]> {
+    async getUserBookings(userId: number): Promise<Booking[] > {
         let bookings = this._bookingRepository.findBy({
             userId: userId
         });
@@ -22,7 +22,7 @@ export class BookingService {
         return bookings;
     }
 
-    async bookParkingSlot(userId: number, startDate: Date, endDate: Date): Promise<void> {
+    async bookParkingSlot(userId: number, startDate: Date, endDate: Date): Promise<string> {
 
         if (startDate.getTime() + 60 * 60 * 1000 > endDate.getTime()
             || endDate.getTime() - startDate.getTime() > this._maximumAllowedBookingPeriod){
@@ -56,6 +56,7 @@ export class BookingService {
         booking.endDate = endDate;
 
         await this._bookingRepository.save(booking);
+        return freeSlots[0].name;
      }
 
     async cancelBooking(bookingId: number): Promise<void> {

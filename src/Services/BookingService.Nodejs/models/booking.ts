@@ -10,8 +10,10 @@ export class Booking {
     @Column()
     userId: number;
 
-    @OneToOne(() => ParkingSlot, (slot) => slot.id, { nullable: false, onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+    @OneToOne(type => ParkingSlot, { nullable: false, onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     @JoinColumn()
+    parkingSlot: ParkingSlot;
+
     parkingSlotId: number;
 
     @Column()

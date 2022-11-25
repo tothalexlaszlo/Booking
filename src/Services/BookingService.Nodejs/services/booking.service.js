@@ -54,6 +54,7 @@ class BookingService {
             booking.startDate = startDate;
             booking.endDate = endDate;
             yield this._bookingRepository.save(booking);
+            return freeSlots[0].name;
         });
     }
     cancelBooking(bookingId) {

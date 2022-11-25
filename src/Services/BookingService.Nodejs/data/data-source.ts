@@ -11,7 +11,7 @@ export const AppDataSource = new DataSource({
     database: "Booking",
     synchronize: true,
     logging: true,
-    entities: [Booking, ParkingSlot],
+    entities: [ParkingSlot, Booking],
     subscribers: [],
     migrations: [],
     extra: {
