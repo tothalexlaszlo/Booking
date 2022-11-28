@@ -12,12 +12,13 @@ export class GrpcServer {
         this._bookingService = new BookingService();
     }
 
+    //https://stackoverflow.com/questions/58687918/javascripts-scope-this-in-typescripts-class
     public start(port: number): void {
         this._server = new Server();
         this._server.addService(GrpcBookingServiceService, {
-            bookParkingSlot: this.bookParkingSlot,
-            cancelBooking: this.cancelBooking,
-            getActiveBookingsByUser: this.getActiveBookingsByUser
+            bookParkingSlot: this.bookParkingSlot.bind(this),
+            cancelBooking: this.cancelBooking.bind(this),
+            getActiveBookingsByUser: this.getActiveBookingsByUser.bind(this)
         });
 
         this._server.bindAsync('0.0.0.0:' + port, ServerCredentials.createInsecure(), () => {
@@ -36,7 +37,6 @@ export class GrpcServer {
         } catch (error) {
             callback(error);
         }
-
     }
 
     private async cancelBooking(call: ServerUnaryCall<CancelBookingRequest, CancelBookingReply>,
@@ -76,5 +76,3 @@ export class GrpcServer {
         }
     }
 }
-
-

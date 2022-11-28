@@ -1,4 +1,4 @@
-import { Repository } from "typeorm";
+import { Brackets, Repository } from "typeorm";
 import { Booking } from "../models/booking";
 import { ParkingSlot } from "../models/parking-slot";
 import { AppDataSource } from "../data/data-source";
@@ -24,23 +24,32 @@ export class BookingService {
 
     async bookParkingSlot(userId: number, startDate: Date, endDate: Date): Promise<string> {
 
-        if (startDate.getTime() + 60 * 60 * 1000 > endDate.getTime()
-            || endDate.getTime() - startDate.getTime() > this._maximumAllowedBookingPeriod){
-                throw new Error("Invalid start or end date of requested booking");
+        if (startDate.getTime() + 60 * 60 * 1000 > endDate.getTime()) {
+            throw new Error("Requested booking's period was below required minimum.");
             }
+        if (endDate.getTime() - startDate.getTime() > this._maximumAllowedBookingPeriod) {
+            throw new Error("Requested booking's period exceeds maximum duration.");
+        }
 
         let parkingSlots = await this._parkingSlotRepository.find();
+
         let bookingsForGivenTimePeriod = await AppDataSource
             .getRepository(Booking)
             .createQueryBuilder("booking")
-            .where("booking.startDate > :startDate AND booking.endDate > :endDate", { startDate: startDate, endDate: endDate})
-            .orWhere("booking.startDate > :startDate AND booking.endDate < :endDate", { startDate: startDate, endDate: endDate})
-            .orWhere("booking.startDate < :startDate AND booking.endDate > :endDate", { startDate: startDate, endDate: endDate})
-            .orWhere("booking.startDate < :startDate AND booking.endDate < :endDate", { startDate: startDate, endDate: endDate})
+            .leftJoinAndSelect("booking.parkingSlot", "parkingSlot")
+            .where(new Brackets((qb) => qb.where("booking.startDate > :startDate AND booking.endDate > :endDate AND booking.startDate < :endDate",
+                { startDate: startDate, endDate: endDate})))
+            .orWhere(new Brackets((qb) => qb.where("booking.startDate > :startDate AND booking.endDate < :endDate",
+                { startDate: startDate, endDate: endDate})))
+            .orWhere(new Brackets((qb) => qb.where("booking.startDate < :startDate AND booking.endDate > :endDate",
+                { startDate: startDate, endDate: endDate})))
+            .orWhere(new Brackets((qb) => qb.where("booking.startDate < :startDate AND booking.endDate < :endDate AND booking.endDate > :startDate",
+                { startDate: startDate, endDate: endDate})))
+            .printSql()
             .getMany();
 
         let currentlyBookedParkingSlots = bookingsForGivenTimePeriod.map(booking =>
-            booking.parkingSlotId).filter(this.uniqueFilter);
+            booking.parkingSlot.id).filter(this.uniqueFilter);
         let freeSlots = parkingSlots.filter(parkingSlot =>
             !currentlyBookedParkingSlots.includes(parkingSlot.id))
 
@@ -50,13 +59,13 @@ export class BookingService {
         }
 
         let booking = new Booking();
-        booking.parkingSlotId = freeSlots[0].id;
+        booking.parkingSlot = freeSlots[0];
         booking.userId = userId;
         booking.startDate = startDate;
         booking.endDate = endDate;
 
         await this._bookingRepository.save(booking);
-        return freeSlots[0].name;
+        return booking.parkingSlot.name;
      }
 
     async cancelBooking(bookingId: number): Promise<void> {

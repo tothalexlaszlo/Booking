@@ -15,6 +15,7 @@ const booking_grpc_pb_1 = require("../proto/booking_grpc_pb");
 const booking_pb_1 = require("../proto/booking_pb");
 const booking_service_1 = require("./booking.service");
 const timestamp_pb_1 = require("google-protobuf/google/protobuf/timestamp_pb");
+const bookingService = new booking_service_1.BookingService();
 class GrpcServer {
     constructor() {
         this._bookingService = new booking_service_1.BookingService();
@@ -22,9 +23,9 @@ class GrpcServer {
     start(port) {
         this._server = new grpc_js_1.Server();
         this._server.addService(booking_grpc_pb_1.GrpcBookingServiceService, {
-            bookParkingSlot: this.bookParkingSlot,
-            cancelBooking: this.cancelBooking,
-            getActiveBookingsByUser: this.getActiveBookingsByUser
+            bookParkingSlot: this.bookParkingSlot.bind(this),
+            cancelBooking: this.cancelBooking.bind(this),
+            getActiveBookingsByUser: this.getActiveBookingsByUser.bind(this)
         });
         this._server.bindAsync('0.0.0.0:' + port, grpc_js_1.ServerCredentials.createInsecure(), () => {
             this._server.start();

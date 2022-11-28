@@ -7,9 +7,6 @@ option csharp_namespace = "Grpc.BookingService";
 
 package booking;
 
-package booking;
-
-
 service GrpcBookingService {
   rpc BookParkingSlot (BookingRequest) returns (BookingReply){
     option (google.api.http) = {
