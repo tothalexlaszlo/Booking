@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookingService.Aspnet.Data;
 
-public class AppDbContext : DbContext
+internal class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
 
-    public virtual DbSet<Booking> Categories { get; set; }
-    public virtual DbSet<ParkingSlot> Products { get; set; }
+    public virtual DbSet<Booking> Bookings { get; set; }
+    public virtual DbSet<ParkingSlot> ParkingSlots { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

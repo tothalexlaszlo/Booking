@@ -1,5 +1,5 @@
 namespace BookingService.Aspnet.Exceptions;
 
-public class NoFreeParkingSlotException : ApplicationException
+internal class NoFreeParkingSlotException : ApplicationException
 {
 }

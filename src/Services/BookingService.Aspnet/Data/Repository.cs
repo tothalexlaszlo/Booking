@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 namespace BookingService.Aspnet.Data;
 
 /// <inheritdoc cref="IRepository{TEntity}"/>
-public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, new()
+internal class Repository<TEntity> : IRepository<TEntity> where TEntity : class, new()
 {
     internal readonly DbSet<TEntity> _dbSet;
 
