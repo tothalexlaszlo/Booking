@@ -15,8 +15,13 @@ export class BookingService {
     }
 
     async getUserBookings(userId: number): Promise<Booking[] > {
-        let bookings = this._bookingRepository.findBy({
-            userId: userId
+        let bookings = await this._bookingRepository.find({
+            where: {
+                userId: userId
+            },
+            relations: {
+                parkingSlot: true
+            }
         });
 
         return bookings;

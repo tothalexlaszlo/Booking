@@ -23,8 +23,13 @@ class BookingService {
     }
     getUserBookings(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            let bookings = this._bookingRepository.findBy({
-                userId: userId
+            let bookings = yield this._bookingRepository.find({
+                where: {
+                    userId: userId
+                },
+                relations: {
+                    parkingSlot: true
+                }
             });
             return bookings;
         });
