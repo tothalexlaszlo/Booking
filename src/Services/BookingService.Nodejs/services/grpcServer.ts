@@ -13,7 +13,7 @@ export class GrpcServer {
     }
 
     //https://stackoverflow.com/questions/58687918/javascripts-scope-this-in-typescripts-class
-    public start(port: number): void {
+    public start(port: string): void {
         this._server = new Server();
         this._server.addService(GrpcBookingServiceService, {
             bookParkingSlot: this.bookParkingSlot.bind(this),
@@ -21,7 +21,7 @@ export class GrpcServer {
             getActiveBookingsByUser: this.getActiveBookingsByUser.bind(this)
         });
 
-        this._server.bindAsync('0.0.0.0:' + port, ServerCredentials.createInsecure(), () => {
+        this._server.bindAsync("localhost:" + port, ServerCredentials.createInsecure(), () => {
             this._server.start();
         });
     }

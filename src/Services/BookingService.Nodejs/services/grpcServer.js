@@ -27,7 +27,7 @@ class GrpcServer {
             cancelBooking: this.cancelBooking.bind(this),
             getActiveBookingsByUser: this.getActiveBookingsByUser.bind(this)
         });
-        this._server.bindAsync('0.0.0.0:' + port, grpc_js_1.ServerCredentials.createInsecure(), () => {
+        this._server.bindAsync("localhost:" + port, grpc_js_1.ServerCredentials.createInsecure(), () => {
             this._server.start();
         });
     }

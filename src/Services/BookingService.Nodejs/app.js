@@ -12,7 +12,7 @@ data_source_1.AppDataSource
     .then(() => console.log("Data Source has been initialized!"))
     .catch((err) => console.error("Error during Data Source initialization:", err));
 const grpcServer = new grpcServer_1.GrpcServer();
-grpcServer.start(3000);
+grpcServer.start(process.env.PORT || "3000");
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
     const err = new Error('Not Found');
