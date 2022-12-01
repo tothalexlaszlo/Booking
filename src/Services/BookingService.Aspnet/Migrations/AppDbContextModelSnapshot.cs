@@ -46,7 +46,7 @@ namespace BookingService.Aspnet.Migrations
 
                     b.HasIndex("ParkingSlotId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Bookings", (string)null);
                 });
 
             modelBuilder.Entity("BookingService.Aspnet.Models.ParkingSlot", b =>
@@ -63,7 +63,7 @@ namespace BookingService.Aspnet.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ParkingSlots");
+                    b.ToTable("ParkingSlots", (string)null);
                 });
 
             modelBuilder.Entity("BookingService.Aspnet.Models.Booking", b =>

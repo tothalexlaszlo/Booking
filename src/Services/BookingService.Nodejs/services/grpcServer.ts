@@ -1,6 +1,14 @@
 import { sendUnaryData, Server, ServerUnaryCall, ServerCredentials } from "@grpc/grpc-js";
 import { GrpcBookingServiceService } from "../proto/booking_grpc_pb";
-import { BookingReply, BookingRequest, BookingsByUserReply, BookingsByUserRequest, CancelBookingReply, CancelBookingRequest } from "../proto/booking_pb";
+import
+{
+    BookingReply,
+    BookingRequest,
+    BookingsByUserReply,
+    BookingsByUserRequest,
+    CancelBookingReply,
+    CancelBookingRequest
+} from "../proto/booking_pb";
 import { BookingService } from "./booking.service";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 

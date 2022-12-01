@@ -7,26 +7,22 @@ namespace BookingService.Aspnet.Services;
 
 internal sealed class GrpcBookingService : Grpc.BookingService.GrpcBookingService.GrpcBookingServiceBase
 {
-    private readonly ILogger<GrpcBookingService> _logger;
     private readonly BookingService _bookingService;
-    private readonly ParkingSlotService _parkingSlotService;
 
-    public GrpcBookingService(ILogger<GrpcBookingService> logger, BookingService bookingService, ParkingSlotService parkingSlotService)
+    public GrpcBookingService(ILogger<GrpcBookingService> logger, BookingService bookingService)
     {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _bookingService = bookingService ?? throw new ArgumentNullException(nameof(bookingService));
-        _parkingSlotService = parkingSlotService ?? throw new ArgumentNullException(nameof(parkingSlotService));
     }
 
     public override async Task<BookingsByUserReply> GetActiveBookingsByUser(BookingsByUserRequest request, ServerCallContext context)
     {
         var activeBookingsForUser = await _bookingService.GetActiveBookingsByUserAsync(request.UserId);
-        var reply = await CreateBookingsByUserReply(activeBookingsForUser);
+        var reply = CreateBookingsByUserReply(activeBookingsForUser);
 
         return reply;
     }
 
-    private async Task<BookingsByUserReply> CreateBookingsByUserReply(List<Booking> activeBookingsForUser)
+    private static BookingsByUserReply CreateBookingsByUserReply(List<Booking> activeBookingsForUser)
     {
         var reply = new BookingsByUserReply();
 
@@ -34,7 +30,7 @@ internal sealed class GrpcBookingService : Grpc.BookingService.GrpcBookingServic
         {
             var bookingReply = new BookingsByUserReply.Types.BookingByUser
             {
-                ParkingSlotName = await _parkingSlotService.GetParkingSlotNameById(activeBooking.ParkingSlotId),
+                ParkingSlotName = activeBooking.ParkingSlot.Name,
                 StartDate = Timestamp.FromDateTime(activeBooking.StartDate),
                 EndDate = Timestamp.FromDateTime(activeBooking.EndDate)
             };
@@ -48,17 +44,12 @@ internal sealed class GrpcBookingService : Grpc.BookingService.GrpcBookingServic
     public override async Task<BookingReply> BookParkingSlot(BookingRequest request, ServerCallContext context)
     {
         var booking = await _bookingService.BookParkingSlotAsync(request.UserId, request.StartDate.ToDateTime(), request.EndDate.ToDateTime());
-        var reply = await CreateBookingReply(booking);
-        return reply;
-    }
-
-    private async Task<BookingReply> CreateBookingReply(Booking booking)
-    {
-        return new BookingReply()
+        var reply = new BookingReply()
         {
             BookingId = booking.Id,
-            ParkingSlotName = await _parkingSlotService.GetParkingSlotNameById(booking.ParkingSlotId)
+            ParkingSlotName = booking.ParkingSlot.Name
         };
+        return reply;
     }
 
     public override Task<CancelBookingReply> CancelBooking(CancelBookingRequest request, ServerCallContext context)

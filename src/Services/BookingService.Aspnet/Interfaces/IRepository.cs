@@ -8,6 +8,7 @@ namespace BookingService.Aspnet.Interfaces;
 /// <typeparam name="TEntity">Entity.</typeparam>
 interface IRepository<TEntity> where TEntity : class, new()
 {
+    void SaveChanges();
     void Add(TEntity entity);
     void AddRange(IEnumerable<TEntity> entities);
     void Delete(int id);

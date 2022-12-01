@@ -47,11 +47,10 @@ class BookingService {
                 .getRepository(booking_1.Booking)
                 .createQueryBuilder("booking")
                 .leftJoinAndSelect("booking.parkingSlot", "parkingSlot")
-                .where(new typeorm_1.Brackets((qb) => qb.where("booking.startDate > :startDate AND booking.endDate > :endDate AND booking.startDate < :endDate", { startDate: startDate, endDate: endDate })))
-                .orWhere(new typeorm_1.Brackets((qb) => qb.where("booking.startDate > :startDate AND booking.endDate < :endDate", { startDate: startDate, endDate: endDate })))
-                .orWhere(new typeorm_1.Brackets((qb) => qb.where("booking.startDate < :startDate AND booking.endDate > :endDate", { startDate: startDate, endDate: endDate })))
-                .orWhere(new typeorm_1.Brackets((qb) => qb.where("booking.startDate < :startDate AND booking.endDate < :endDate AND booking.endDate > :startDate", { startDate: startDate, endDate: endDate })))
-                .printSql()
+                .where(new typeorm_1.Brackets((qb) => qb.where("booking.startDate >= :startDate AND booking.endDate >= :endDate AND booking.startDate <= :endDate", { startDate: startDate, endDate: endDate })))
+                .orWhere(new typeorm_1.Brackets((qb) => qb.where("booking.startDate >= :startDate AND booking.endDate <= :endDate", { startDate: startDate, endDate: endDate })))
+                .orWhere(new typeorm_1.Brackets((qb) => qb.where("booking.startDate <= :startDate AND booking.endDate >= :endDate", { startDate: startDate, endDate: endDate })))
+                .orWhere(new typeorm_1.Brackets((qb) => qb.where("booking.startDate <= :startDate AND booking.endDate <= :endDate AND booking.endDate >= :startDate", { startDate: startDate, endDate: endDate })))
                 .getMany();
             let currentlyBookedParkingSlots = bookingsForGivenTimePeriod.map(booking => booking.parkingSlot.id).filter(this.uniqueFilter);
             let freeSlots = parkingSlots.filter(parkingSlot => !currentlyBookedParkingSlots.includes(parkingSlot.id));

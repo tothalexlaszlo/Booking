@@ -14,10 +14,6 @@ internal class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        _ = modelBuilder.Entity<Booking>()
-            .HasOne<ParkingSlot>().WithMany();
 
-        _ = modelBuilder.Entity<ParkingSlot>()
-            .HasMany<Booking>().WithOne().HasForeignKey(booking => booking.ParkingSlotId);
     }
 }

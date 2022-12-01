@@ -5,14 +5,11 @@ import { AppDataSource } from "../data/data-source";
 
 export class BookingService {
     private _maximumAllowedBookingPeriod: number = 12 * 60 * 60 * 1000;
-
     private _bookingRepository: Repository<Booking> = AppDataSource
         .getRepository(Booking);
     private _parkingSlotRepository: Repository<ParkingSlot> = AppDataSource.getRepository(ParkingSlot);
 
-    constructor() {
-
-    }
+    constructor() { }
 
     async getUserBookings(userId: number): Promise<Booking[] > {
         let bookings = await this._bookingRepository.find({
@@ -42,15 +39,14 @@ export class BookingService {
             .getRepository(Booking)
             .createQueryBuilder("booking")
             .leftJoinAndSelect("booking.parkingSlot", "parkingSlot")
-            .where(new Brackets((qb) => qb.where("booking.startDate > :startDate AND booking.endDate > :endDate AND booking.startDate < :endDate",
+            .where(new Brackets((qb) => qb.where("booking.startDate >= :startDate AND booking.endDate >= :endDate AND booking.startDate <= :endDate",
                 { startDate: startDate, endDate: endDate})))
-            .orWhere(new Brackets((qb) => qb.where("booking.startDate > :startDate AND booking.endDate < :endDate",
+            .orWhere(new Brackets((qb) => qb.where("booking.startDate >= :startDate AND booking.endDate <= :endDate",
                 { startDate: startDate, endDate: endDate})))
-            .orWhere(new Brackets((qb) => qb.where("booking.startDate < :startDate AND booking.endDate > :endDate",
+            .orWhere(new Brackets((qb) => qb.where("booking.startDate <= :startDate AND booking.endDate >= :endDate",
                 { startDate: startDate, endDate: endDate})))
-            .orWhere(new Brackets((qb) => qb.where("booking.startDate < :startDate AND booking.endDate < :endDate AND booking.endDate > :startDate",
+            .orWhere(new Brackets((qb) => qb.where("booking.startDate <= :startDate AND booking.endDate <= :endDate AND booking.endDate >= :startDate",
                 { startDate: startDate, endDate: endDate})))
-            .printSql()
             .getMany();
 
         let currentlyBookedParkingSlots = bookingsForGivenTimePeriod.map(booking =>
