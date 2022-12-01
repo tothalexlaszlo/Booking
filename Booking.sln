@@ -27,6 +27,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "protos", "protos", "{1EF7E407-1CED-49C9-ADCD-3F7251EEA548}"
 	ProjectSection(SolutionItems) = preProject
 		src\Shared\protos\booking.proto = src\Shared\protos\booking.proto
+		src\Shared\protos\profile.proto = src\Shared\protos\profile.proto
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "google", "google", "{A686C386-3578-400C-9B33-3AC5CC096C2C}"
@@ -36,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{7BFF4F69-6FB
 		src\Shared\protos\google\api\annotations.proto = src\Shared\protos\google\api\annotations.proto
 		src\Shared\protos\google\api\http.proto = src\Shared\protos\google\api\http.proto
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileService.Aspnet", "src\Services\ProfileService.Aspnet\ProfileService.Aspnet.csproj", "{57209DE9-09EE-446C-ACDE-0DD1251FE513}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +54,10 @@ Global
 		{D2DB1336-71B5-43D1-9641-B5574D9215A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2DB1336-71B5-43D1-9641-B5574D9215A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2DB1336-71B5-43D1-9641-B5574D9215A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57209DE9-09EE-446C-ACDE-0DD1251FE513}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57209DE9-09EE-446C-ACDE-0DD1251FE513}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57209DE9-09EE-446C-ACDE-0DD1251FE513}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57209DE9-09EE-446C-ACDE-0DD1251FE513}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +70,7 @@ Global
 		{1EF7E407-1CED-49C9-ADCD-3F7251EEA548} = {39B85874-AF38-48BE-8E39-D520D2CAC375}
 		{A686C386-3578-400C-9B33-3AC5CC096C2C} = {1EF7E407-1CED-49C9-ADCD-3F7251EEA548}
 		{7BFF4F69-6FB9-4CA8-A752-9F58F9478CB4} = {A686C386-3578-400C-9B33-3AC5CC096C2C}
+		{57209DE9-09EE-446C-ACDE-0DD1251FE513} = {5B16D307-F7D5-4315-8EF8-3B2E8904EA37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E18A80D2-3974-45B2-B103-28CF1FCFFECD}
