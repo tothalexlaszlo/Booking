@@ -23,10 +23,10 @@ __decorate([
     __metadata("design:type", Number)
 ], Booking.prototype, "userId", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => parking_slot_1.ParkingSlot, (slot) => slot.id),
+    (0, typeorm_1.ManyToOne)(type => parking_slot_1.ParkingSlot, { nullable: false, onDelete: 'CASCADE', onUpdate: 'CASCADE', cascade: true }),
     (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", Number)
-], Booking.prototype, "parkingSlotId", void 0);
+    __metadata("design:type", parking_slot_1.ParkingSlot)
+], Booking.prototype, "parkingSlot", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
