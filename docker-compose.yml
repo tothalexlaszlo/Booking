@@ -15,4 +15,5 @@ services:
       context: .
       dockerfile: src/Services/BookingService.Aspnet/Dockerfile
     ports:
-      - "8000:5000"
+      - "8080:80"
+      - "8433:443"
