@@ -1,5 +1,5 @@
 namespace BookingService.Aspnet.Exceptions;
 
-public class InvalidBookingIntervalException : ApplicationException
+internal class InvalidBookingIntervalException : ApplicationException
 {
 }

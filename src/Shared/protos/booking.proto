@@ -1,13 +1,30 @@
 syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
 
 option csharp_namespace = "Grpc.BookingService";
 
+package booking;
+
 service GrpcBookingService {
-  rpc BookParkingSlot (BookingRequest) returns (BookingReply);
-  rpc CancelBooking(CancelBookingRequest) returns (CancelBookingReply);
-  rpc GetActiveBookingsByUser(BookingsByUserRequest) returns (BookingsByUserReply);
+  rpc BookParkingSlot (BookingRequest) returns (BookingReply){
+    option (google.api.http) = {
+      post: "/v1/booking",
+      body: "*"
+    };
+  }
+  rpc CancelBooking(CancelBookingRequest) returns (CancelBookingReply){
+    option (google.api.http) = {
+      post: "/v1/booking/{bookingId}",
+      body: "*"
+    };
+  }
+  rpc GetActiveBookingsByUser(BookingsByUserRequest) returns (BookingsByUserReply){
+    option (google.api.http) = {
+      get: "/v1/booking",
+    };
+  }
 }
 
 message BookingRequest {

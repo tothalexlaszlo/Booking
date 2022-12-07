@@ -1,6 +1,6 @@
 namespace BookingService.Aspnet.Models;
 
-public class Booking
+internal class Booking
 {
     public int Id { get; set; }
     public int UserId { get; set; }

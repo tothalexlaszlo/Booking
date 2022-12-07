@@ -5,6 +5,8 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>BookingService.Nodejs</Name>
     <RootNamespace>BookingService</RootNamespace>
+    <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
+    <NodeExePath>C:\Program Files\nodejs\node.exe</NodeExePath>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -22,7 +24,7 @@
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
     <NodejsPort>1337</NodejsPort>
     <EnableTypeScript>true</EnableTypeScript>
-    <StartWebBrowser>true</StartWebBrowser>
+    <StartWebBrowser>True</StartWebBrowser>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +34,11 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="app.ts" />
+    <Content Include="proto\booking_grpc_pb.js" />
+    <Content Include="proto\booking_pb.js" />
+    <Content Include="scripts\build-protos.sh">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
@@ -39,15 +46,20 @@
   <ItemGroup>
     <Folder Include="models\" />
     <Folder Include="Data\" />
+    <Folder Include="proto\" />
+    <Folder Include="scripts\" />
     <Folder Include="services\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="proto\booking_grpc_pb.d.ts" />
+    <TypeScriptCompile Include="proto\booking_pb.d.ts" />
     <TypeScriptCompile Include="Data\booking.repository.ts" />
     <TypeScriptCompile Include="Data\data-source.ts" />
     <TypeScriptCompile Include="Data\parking-slot.repository.ts" />
     <TypeScriptCompile Include="models\booking.ts" />
     <TypeScriptCompile Include="models\parking-slot.ts" />
     <TypeScriptCompile Include="services\booking.service.ts" />
+    <TypeScriptCompile Include="services\grpcServer.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

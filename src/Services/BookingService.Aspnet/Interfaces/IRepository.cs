@@ -6,13 +6,13 @@ namespace BookingService.Aspnet.Interfaces;
 /// Generic repository.
 /// </summary>
 /// <typeparam name="TEntity">Entity.</typeparam>
-public interface IRepository<TEntity> where TEntity : class, new()
+interface IRepository<TEntity> where TEntity : class, new()
 {
-    public void Add(TEntity entity);
-    public void AddRange(IEnumerable<TEntity> entities);
-    public void Delete(int id);
-    public void Delete(TEntity entity);
-    public void DeleteRange(IEnumerable<TEntity> entities);
+    void Add(TEntity entity);
+    void AddRange(IEnumerable<TEntity> entities);
+    void Delete(int id);
+    void Delete(TEntity entity);
+    void DeleteRange(IEnumerable<TEntity> entities);
 
     /// <summary>
     /// Find all the specific entities.
@@ -25,7 +25,7 @@ public interface IRepository<TEntity> where TEntity : class, new()
     /// Use <c>await</c> to ensure that any asynchronous operations have completed before calling another method on this context.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation. The task result contains a List of <typeparamref name="TEntity"/>.</returns>
-    public Task<List<TEntity>> FindAllByAsync(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, string[]? includeProperties = null);
+    Task<List<TEntity>> FindAllByAsync(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, string[]? includeProperties = null);
 
     /// <summary>
     /// Find a specific entity.
@@ -37,8 +37,8 @@ public interface IRepository<TEntity> where TEntity : class, new()
     /// Use <c>await</c> to ensure that any asynchronous operations have completed before calling another method on this context.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation. The task result contains a <typeparamref name="TEntity"/>.</returns>
-    public Task<TEntity?> FindByAsync(Expression<Func<TEntity, bool>> filter, string[]? includeProperties = null);
-    public ValueTask<TEntity?> FindByIdAsync(int id);
+    Task<TEntity?> FindByAsync(Expression<Func<TEntity, bool>> filter, string[]? includeProperties = null);
+    ValueTask<TEntity?> FindByIdAsync(int id);
 
     /// <summary>
     /// Get all the entitis.
@@ -48,7 +48,7 @@ public interface IRepository<TEntity> where TEntity : class, new()
     /// Use <c>await</c> to ensure that any asynchronous operations have completed before calling another method on this context.
     /// </remarks>
     /// <returns>A task that represents the asynchronous operation. The task result contains a <c>System.Collections.Generic.List</c>.</returns>
-    public Task<List<TEntity>> GetAllAsync();
-    public void Update(TEntity entity);
-    public void UpdateRange(IEnumerable<TEntity> entities);
+    Task<List<TEntity>> GetAllAsync();
+    void Update(TEntity entity);
+    void UpdateRange(IEnumerable<TEntity> entities);
 }

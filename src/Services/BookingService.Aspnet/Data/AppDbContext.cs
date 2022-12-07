@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookingService.Aspnet.Data;
 
-public class AppDbContext : DbContext
+internal class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
