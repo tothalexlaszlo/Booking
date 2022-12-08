@@ -8,11 +8,13 @@ namespace BookingService.Aspnet.Data;
 internal class Repository<TEntity> : IRepository<TEntity> where TEntity : class, new()
 {
     internal readonly DbSet<TEntity> _dbSet;
+    private readonly AppDbContext _context;
 
     public Repository(AppDbContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
         _dbSet = context.Set<TEntity>();
+        _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
     ///<inheritdoc/>
@@ -25,7 +27,7 @@ internal class Repository<TEntity> : IRepository<TEntity> where TEntity : class,
     public virtual void Delete(int id)
     {
         var entityToDelete = _dbSet.Find(id);
-        if (entityToDelete is  not null)
+        if (entityToDelete is not null)
         {
             Delete(entityToDelete);
         }
@@ -74,6 +76,7 @@ internal class Repository<TEntity> : IRepository<TEntity> where TEntity : class,
 
     ///<inheritdoc/>
     public virtual Task<List<TEntity>> GetAllAsync() => _dbSet.ToListAsync();
+    public void SaveChanges() => _context.SaveChanges();
 
     ///<inheritdoc/>
     public virtual void Update(TEntity entity) => _dbSet.Update(entity);

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookingService.Aspnet.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221124131312_InitialCreate")]
+    [Migration("20221208171009_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -71,11 +71,13 @@ namespace BookingService.Aspnet.Migrations
 
             modelBuilder.Entity("BookingService.Aspnet.Models.Booking", b =>
                 {
-                    b.HasOne("BookingService.Aspnet.Models.ParkingSlot", null)
+                    b.HasOne("BookingService.Aspnet.Models.ParkingSlot", "ParkingSlot")
                         .WithMany()
                         .HasForeignKey("ParkingSlotId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ParkingSlot");
                 });
 #pragma warning restore 612, 618
         }

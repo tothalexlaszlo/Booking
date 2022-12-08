@@ -14,10 +14,11 @@ internal class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        _ = modelBuilder.Entity<Booking>()
-            .HasOne<ParkingSlot>().WithMany();
-
-        _ = modelBuilder.Entity<ParkingSlot>()
-            .HasMany<Booking>().WithOne().HasForeignKey(booking => booking.ParkingSlotId);
+        modelBuilder.Entity<Booking>()
+            .Property(e => e.StartDate)
+            .HasConversion(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+        modelBuilder.Entity<Booking>()
+            .Property(e => e.EndDate)
+            .HasConversion(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
     }
 }

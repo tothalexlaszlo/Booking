@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="app.ts" />
+    <Content Include="Dockerfile" />
     <Content Include="proto\booking_grpc_pb.js" />
     <Content Include="proto\booking_pb.js" />
     <Content Include="scripts\build-protos.sh">

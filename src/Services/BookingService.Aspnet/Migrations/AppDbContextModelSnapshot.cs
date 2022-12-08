@@ -68,11 +68,13 @@ namespace BookingService.Aspnet.Migrations
 
             modelBuilder.Entity("BookingService.Aspnet.Models.Booking", b =>
                 {
-                    b.HasOne("BookingService.Aspnet.Models.ParkingSlot", null)
+                    b.HasOne("BookingService.Aspnet.Models.ParkingSlot", "ParkingSlot")
                         .WithMany()
                         .HasForeignKey("ParkingSlotId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ParkingSlot");
                 });
 #pragma warning restore 612, 618
         }

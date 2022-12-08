@@ -43,6 +43,6 @@ app.MapGrpcService<GrpcBookingService>();
 
 await using var scope = app.Services.CreateAsyncScope();
 using var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-await dbContext.Database.MigrateAsync();   
+await dbContext.Database.MigrateAsync();
 
 app.Run();

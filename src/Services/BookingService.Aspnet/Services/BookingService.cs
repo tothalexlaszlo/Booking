@@ -9,6 +9,7 @@ internal sealed class BookingService
     private readonly TimeSpan _maximumAllowedBookingPeriod = TimeSpan.FromHours(12);
     private readonly IRepository<Booking> _bookingRepository;
     private readonly IRepository<ParkingSlot> _parkingSlotRepository;
+    private readonly string[] _relationProperties = new string[] { nameof(ParkingSlot) };
 
     public BookingService(IRepository<Booking> bookingRepository, IRepository<ParkingSlot> parkingSlotRepository)
     {
@@ -17,7 +18,7 @@ internal sealed class BookingService
     }
 
     public async Task<List<Booking>> GetActiveBookingsByUserAsync(int userId) =>
-        await _bookingRepository.FindAllByAsync(booking => booking.UserId == userId && booking.EndDate > DateTime.UtcNow);
+        await _bookingRepository.FindAllByAsync(booking => booking.UserId == userId && booking.EndDate > DateTime.UtcNow, includeProperties: _relationProperties);
 
     public async Task<Booking> BookParkingSlotAsync(int userId, DateTime startDate, DateTime endDate)
     {
@@ -27,38 +28,45 @@ internal sealed class BookingService
         }
 
         var parkingSlots = await _parkingSlotRepository.GetAllAsync();
-        var bookingsForGivenTimePeriod = await _bookingRepository.FindAllByAsync(booking => IsThereABookingAtGivenPeriod(startDate, endDate, booking));
+        var bookingsForGivenTimePeriod = await _bookingRepository.FindAllByAsync(
+            AreThereBookingsAtGivenPeriod(startDate, endDate), includeProperties: _relationProperties);
 
-        var currentlyBookedParkingSlots = bookingsForGivenTimePeriod.DistinctBy(booking => booking.ParkingSlotId).Select(booking => booking.ParkingSlotId);
+        var currentlyBookedParkingSlots = bookingsForGivenTimePeriod.DistinctBy(booking => booking.ParkingSlot.Id).Select(booking => booking.ParkingSlot.Id);
         var freeSlots = parkingSlots.ExceptBy(currentlyBookedParkingSlots, slot => slot.Id);
 
         var spotToBook = freeSlots.FirstOrDefault();
 
         if (spotToBook is null)
         {
-            throw new NoFreeParkingSlotException();
+            throw new NoFreeParkingSlotException("Ran out of free parking spots!");
         }
 
         var booking = new Booking()
         {
-            ParkingSlotId = spotToBook.Id,
+            ParkingSlot = spotToBook,
             UserId = userId,
             StartDate = startDate,
-            EndDate= endDate
+            EndDate = endDate
         };
 
         _bookingRepository.Add(booking);
+        _bookingRepository.SaveChanges();
 
         return booking;
     }
 
-    public void CancelBooking(int bookingId) => _bookingRepository.Delete(bookingId);
-
-    private static bool IsThereABookingAtGivenPeriod(in DateTime startDate, in DateTime endDate, in Booking booking)
+    public void CancelBooking(int bookingId)
     {
-        return (startDate < booking.StartDate && endDate < booking.EndDate)
-                || (startDate < booking.StartDate && endDate > booking.EndDate)
-                || (startDate > booking.StartDate && endDate < booking.EndDate)
-                || (startDate > booking.StartDate && endDate > booking.EndDate);
+        _bookingRepository.Delete(bookingId);
+        _bookingRepository.SaveChanges();
     }
+
+    private static System.Linq.Expressions.Expression<Func<Booking, bool>> AreThereBookingsAtGivenPeriod(DateTime startDate, DateTime endDate)
+    {
+        return booking => (startDate <= booking.StartDate && endDate <= booking.EndDate && endDate >= booking.StartDate)
+                                || (startDate <= booking.StartDate && endDate >= booking.EndDate)
+                                || (startDate >= booking.StartDate && endDate <= booking.EndDate)
+                                || (startDate >= booking.StartDate && endDate >= booking.EndDate && startDate <= booking.EndDate);
+    }
+
 }
