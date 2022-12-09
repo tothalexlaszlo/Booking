@@ -17,12 +17,3 @@ services:
     ports:
       - "8080:80"
       - "8433:443"
-  #nodejs-app:
-  #  depends_on:
-  #    - ms-sql-server
-  #  container_name: nodejs-app
-  #  build:
-  #    context: .
-  #    dockerfile: src/Services/BookingService.Nodejs/Dockerfile
-  #  ports:
-  #    - "3000:3000"
