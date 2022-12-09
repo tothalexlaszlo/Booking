@@ -16,8 +16,7 @@ service GrpcBookingService {
   }
   rpc CancelBooking(CancelBookingRequest) returns (CancelBookingReply){
     option (google.api.http) = {
-      post: "/v1/booking/{bookingId}",
-      body: "*"
+      delete: "/v1/booking/{bookingId}",
     };
   }
   rpc GetActiveBookingsByUser(BookingsByUserRequest) returns (BookingsByUserReply){
