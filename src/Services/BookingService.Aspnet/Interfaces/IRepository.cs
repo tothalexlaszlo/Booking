@@ -6,7 +6,7 @@ namespace BookingService.Aspnet.Interfaces;
 /// Generic repository.
 /// </summary>
 /// <typeparam name="TEntity">Entity.</typeparam>
-interface IRepository<TEntity> where TEntity : class, new()
+interface IRepository<TEntity> where TEntity : class
 {
     void SaveChanges();
     void Add(TEntity entity);

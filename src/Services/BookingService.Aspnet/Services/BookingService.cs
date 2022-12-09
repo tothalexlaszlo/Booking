@@ -41,13 +41,7 @@ internal sealed class BookingService
             throw new NoFreeParkingSlotException("Ran out of free parking spots!");
         }
 
-        var booking = new Booking()
-        {
-            ParkingSlot = spotToBook,
-            UserId = userId,
-            StartDate = startDate,
-            EndDate = endDate
-        };
+        var booking = new Booking(userId, spotToBook, startDate, endDate);
 
         _bookingRepository.Add(booking);
         _bookingRepository.SaveChanges();
