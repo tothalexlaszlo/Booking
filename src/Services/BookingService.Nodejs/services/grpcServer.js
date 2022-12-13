@@ -13,11 +13,10 @@ exports.GrpcServer = void 0;
 const grpc_js_1 = require("@grpc/grpc-js");
 const booking_grpc_pb_1 = require("../proto/booking_grpc_pb");
 const booking_pb_1 = require("../proto/booking_pb");
-const booking_service_1 = require("./booking.service");
 const timestamp_pb_1 = require("google-protobuf/google/protobuf/timestamp_pb");
 class GrpcServer {
-    constructor() {
-        this._bookingService = new booking_service_1.BookingService();
+    constructor(bookingService) {
+        this._bookingService = bookingService;
     }
     //https://stackoverflow.com/questions/58687918/javascripts-scope-this-in-typescripts-class
     start(port) {

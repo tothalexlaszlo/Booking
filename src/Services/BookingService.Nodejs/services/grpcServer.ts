@@ -16,8 +16,8 @@ export class GrpcServer {
     private _server: Server;
     private _bookingService: BookingService;
 
-    constructor() {
-        this._bookingService = new BookingService();
+    constructor(bookingService: BookingService){
+        this._bookingService = bookingService;
     }
 
     //https://stackoverflow.com/questions/58687918/javascripts-scope-this-in-typescripts-class

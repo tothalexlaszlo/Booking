@@ -2,14 +2,17 @@ using BookingService.Aspnet.Models;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.BookingService;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookingService.Aspnet.Services;
 
+//[Authorize(JwtBearerDefaults.AuthenticationScheme)]
 internal sealed class GrpcBookingService : Grpc.BookingService.GrpcBookingService.GrpcBookingServiceBase
 {
     private readonly BookingService _bookingService;
 
-    public GrpcBookingService(ILogger<GrpcBookingService> logger, BookingService bookingService)
+    public GrpcBookingService(BookingService bookingService)
     {
         _bookingService = bookingService ?? throw new ArgumentNullException(nameof(bookingService));
     }

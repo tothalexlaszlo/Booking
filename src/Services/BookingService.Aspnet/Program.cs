@@ -1,8 +1,11 @@
 using BookingService.Aspnet.Data;
 using BookingService.Aspnet.Interfaces;
 using BookingService.Aspnet.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,12 +29,23 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeGrpcXmlComments(filePath, includeControllerXmlComments: true);
 });
 
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(config => config.TokenValidationParameters = new TokenValidationParameters()
+//    {
+//        ValidIssuer = "ITHub",
+//        ValidAudience = "FIBS",
+//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("d6390614-b135-4d2a-a4e5-39e5fa45b26b"))
+//    });
 #endregion
 
 var app = builder.Build();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
+
+//app.UseAuthentication();
+//app.UseAuthorization();
+
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {

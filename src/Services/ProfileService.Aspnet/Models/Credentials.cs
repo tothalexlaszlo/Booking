@@ -1,6 +1,6 @@
 namespace ProfileService.Aspnet.Models;
 
-internal readonly record struct Credentials
+internal readonly struct Credentials
 {
     public Credentials(string username, string password)
     {
