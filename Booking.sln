@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{7BFF4F69-6FB
 		src\Shared\protos\google\api\http.proto = src\Shared\protos\google\api\http.proto
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServerAspNetIdentity", "src\IdentityServerAspNetIdentity\IdentityServerAspNetIdentity.csproj", "{EF6418EE-2EBC-46FF-A431-B70FD266B794}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{D2DB1336-71B5-43D1-9641-B5574D9215A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2DB1336-71B5-43D1-9641-B5574D9215A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2DB1336-71B5-43D1-9641-B5574D9215A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF6418EE-2EBC-46FF-A431-B70FD266B794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF6418EE-2EBC-46FF-A431-B70FD266B794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF6418EE-2EBC-46FF-A431-B70FD266B794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF6418EE-2EBC-46FF-A431-B70FD266B794}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +69,7 @@ Global
 		{1EF7E407-1CED-49C9-ADCD-3F7251EEA548} = {39B85874-AF38-48BE-8E39-D520D2CAC375}
 		{A686C386-3578-400C-9B33-3AC5CC096C2C} = {1EF7E407-1CED-49C9-ADCD-3F7251EEA548}
 		{7BFF4F69-6FB9-4CA8-A752-9F58F9478CB4} = {A686C386-3578-400C-9B33-3AC5CC096C2C}
+		{EF6418EE-2EBC-46FF-A431-B70FD266B794} = {63817A91-935D-46F8-80DA-4DFD708CE4DC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E18A80D2-3974-45B2-B103-28CF1FCFFECD}
