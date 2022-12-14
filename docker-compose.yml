@@ -24,5 +24,4 @@ services:
       context: .
       dockerfile: src/Services/BookingService.Nodejs/Dockerfile
     ports:  
-      - "3080:80"
-      - "3433:443"
+      - "3080:3000"
