@@ -35,17 +35,17 @@ public static class Config
                 ClientId = "web",
                 //ClientSecrets = { new Secret("secret".Sha256()) },
                 AllowedGrantTypes = GrantTypes.Code,
-                RedirectUris = { "https://localhost:5002/signin-oidc" },
-                PostLogoutRedirectUris = { "https://localhost:5002/signout-callback-oidc" },
-
+                RedirectUris = { "http://localhost:4200/signin-callback" },
+                PostLogoutRedirectUris = { "http://localhost:4200/signout-callback" },               
+                AllowedCorsOrigins = { "http://localhost:4200" },
                 AllowOfflineAccess = true,
-
                 AllowedScopes = new List<string>
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     "booking_api"
-                }
+                },
+                RequireClientSecret = false
             }
         };
 }
