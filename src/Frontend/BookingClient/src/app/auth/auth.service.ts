@@ -6,7 +6,7 @@ import { User, UserManager, UserManagerSettings } from 'oidc-client-ts';
 })
 export class AuthService {
   public userManager: UserManager;
-  public currentUser: User | null = null;
+  private _currentUser: User | null = null;
 
   constructor() {
     const settings : UserManagerSettings = {
@@ -22,8 +22,12 @@ export class AuthService {
     this.userManager = new UserManager(settings);
   }
 
-  public getUser(): Promise<User | null> {
-    return this.userManager.getUser();
+  get currentUser(): User | null {
+    return this._currentUser;
+  }
+
+  public async initialize(): Promise<void> {
+    this._currentUser = await this.userManager.getUser();
   }
 
   public async login(): Promise<void> {

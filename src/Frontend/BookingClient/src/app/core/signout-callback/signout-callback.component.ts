@@ -11,6 +11,7 @@ export class SignoutCallbackComponent implements OnInit {
 
   async ngOnInit() {
     await this._authService.userManager.signoutCallback();
+    await this._authService.initialize();
     this._router.navigate(['']);
   }
 }

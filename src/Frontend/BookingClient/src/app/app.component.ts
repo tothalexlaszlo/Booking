@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { User } from 'oidc-client-ts';
 import { AuthService } from './auth/auth.service';
 
@@ -10,24 +9,20 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'BookingClient';
-  public currentUser: User | null = null;
 
-  constructor(private _authService: AuthService, private _router: Router) {
+  constructor(private _authService: AuthService) {
+  }
+
+  get currentUser() : User | null {
+    return this._authService.currentUser;
   }
 
   async ngOnInit(): Promise<void> {
-    try{
-      this.currentUser = await this._authService.getUser();
-    }
-    catch(error) {
-      console.error(error);
-    }
-
+    await this._authService.initialize();
   }
 
   async login() : Promise<void> {
     await this._authService.login();
-    const user = this._authService.getUser();
   }
 
   logout() : void {
