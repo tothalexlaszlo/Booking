@@ -1,0 +1,16 @@
+<div *ngIf="bookings$ | async as bookings">
+  <div class="card"  *ngFor="let booking of bookings">
+    <div class="card-header">
+      <div>{{booking.bookingId}}</div>
+      <div class="spacer"></div>
+      <button onclick="cancelBooking(booking.bookingId)">Delete</button>
+    </div>
+
+    <div class="card-body">
+      <p>{{booking.startDate}}</p>
+      <p>{{booking.endDate}}</p>
+      <p>{{booking.parkingSlotName}}</p>
+    </div>
+  </div>
+</div>
+

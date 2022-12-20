@@ -4,6 +4,7 @@
 var grpc = require('@grpc/grpc-js');
 var booking_pb = require('./booking_pb.js');
 var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
+var google_api_annotations_pb = require('./google/api/annotations_pb.js');
 
 function serialize_booking_BookingReply(arg) {
   if (!(arg instanceof booking_pb.BookingReply)) {

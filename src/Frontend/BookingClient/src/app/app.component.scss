@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
 
-.loginbutton {
+.button-default {
     margin: 10px;
     border-color: #000000;
     border-radius: 2px;
@@ -8,6 +8,6 @@
     border-style: solid;
 }
 
-.loginbutton:hover {
+.button-default:hover {
     background-color: #6487b3;
 }

@@ -17,6 +17,8 @@ var global = Function('return this')();
 
 var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 goog.object.extend(proto, google_protobuf_timestamp_pb);
+var google_api_annotations_pb = require('./google/api/annotations_pb.js');
+goog.object.extend(proto, google_api_annotations_pb);
 goog.exportSymbol('proto.booking.BookingReply', null, global);
 goog.exportSymbol('proto.booking.BookingRequest', null, global);
 goog.exportSymbol('proto.booking.BookingsByUserReply', null, global);
@@ -203,7 +205,7 @@ proto.booking.BookingRequest.prototype.toObject = function(opt_includeInstance) 
  */
 proto.booking.BookingRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    userid: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    userid: jspb.Message.getFieldWithDefault(msg, 1, ""),
     startdate: (f = msg.getStartdate()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     enddate: (f = msg.getEnddate()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f)
   };
@@ -243,7 +245,7 @@ proto.booking.BookingRequest.deserializeBinaryFromReader = function(msg, reader)
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt32());
+      var value = /** @type {string} */ (reader.readString());
       msg.setUserid(value);
       break;
     case 2:
@@ -286,8 +288,8 @@ proto.booking.BookingRequest.prototype.serializeBinary = function() {
 proto.booking.BookingRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getUserid();
-  if (f !== 0) {
-    writer.writeInt32(
+  if (f.length > 0) {
+    writer.writeString(
       1,
       f
     );
@@ -312,20 +314,20 @@ proto.booking.BookingRequest.serializeBinaryToWriter = function(message, writer)
 
 
 /**
- * optional int32 userId = 1;
- * @return {number}
+ * optional string userId = 1;
+ * @return {string}
  */
 proto.booking.BookingRequest.prototype.getUserid = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /**
- * @param {number} value
+ * @param {string} value
  * @return {!proto.booking.BookingRequest} returns this
  */
 proto.booking.BookingRequest.prototype.setUserid = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -855,7 +857,7 @@ proto.booking.BookingsByUserRequest.prototype.toObject = function(opt_includeIns
  */
 proto.booking.BookingsByUserRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    userid: jspb.Message.getFieldWithDefault(msg, 1, 0)
+    userid: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -893,7 +895,7 @@ proto.booking.BookingsByUserRequest.deserializeBinaryFromReader = function(msg, 
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt32());
+      var value = /** @type {string} */ (reader.readString());
       msg.setUserid(value);
       break;
     default:
@@ -926,8 +928,8 @@ proto.booking.BookingsByUserRequest.prototype.serializeBinary = function() {
 proto.booking.BookingsByUserRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getUserid();
-  if (f !== 0) {
-    writer.writeInt32(
+  if (f.length > 0) {
+    writer.writeString(
       1,
       f
     );
@@ -936,20 +938,20 @@ proto.booking.BookingsByUserRequest.serializeBinaryToWriter = function(message, 
 
 
 /**
- * optional int32 userId = 1;
- * @return {number}
+ * optional string userId = 1;
+ * @return {string}
  */
 proto.booking.BookingsByUserRequest.prototype.getUserid = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /**
- * @param {number} value
+ * @param {string} value
  * @return {!proto.booking.BookingsByUserRequest} returns this
  */
 proto.booking.BookingsByUserRequest.prototype.setUserid = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -1107,7 +1109,8 @@ proto.booking.BookingsByUserReply.BookingByUser.prototype.toObject = function(op
  */
 proto.booking.BookingsByUserReply.BookingByUser.toObject = function(includeInstance, msg) {
   var f, obj = {
-    parkingslotname: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    bookingid: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    parkingslotname: jspb.Message.getFieldWithDefault(msg, 2, ""),
     startdate: (f = msg.getStartdate()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     enddate: (f = msg.getEnddate()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f)
   };
@@ -1147,15 +1150,19 @@ proto.booking.BookingsByUserReply.BookingByUser.deserializeBinaryFromReader = fu
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setBookingid(value);
+      break;
+    case 2:
       var value = /** @type {string} */ (reader.readString());
       msg.setParkingslotname(value);
       break;
-    case 2:
+    case 3:
       var value = new google_protobuf_timestamp_pb.Timestamp;
       reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
       msg.setStartdate(value);
       break;
-    case 3:
+    case 4:
       var value = new google_protobuf_timestamp_pb.Timestamp;
       reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
       msg.setEnddate(value);
@@ -1189,17 +1196,24 @@ proto.booking.BookingsByUserReply.BookingByUser.prototype.serializeBinary = func
  */
 proto.booking.BookingsByUserReply.BookingByUser.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getBookingid();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
   f = message.getParkingslotname();
   if (f.length > 0) {
     writer.writeString(
-      1,
+      2,
       f
     );
   }
   f = message.getStartdate();
   if (f != null) {
     writer.writeMessage(
-      2,
+      3,
       f,
       google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
     );
@@ -1207,7 +1221,7 @@ proto.booking.BookingsByUserReply.BookingByUser.serializeBinaryToWriter = functi
   f = message.getEnddate();
   if (f != null) {
     writer.writeMessage(
-      3,
+      4,
       f,
       google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
     );
@@ -1216,11 +1230,29 @@ proto.booking.BookingsByUserReply.BookingByUser.serializeBinaryToWriter = functi
 
 
 /**
- * optional string parkingSlotName = 1;
+ * optional int32 bookingId = 1;
+ * @return {number}
+ */
+proto.booking.BookingsByUserReply.BookingByUser.prototype.getBookingid = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.booking.BookingsByUserReply.BookingByUser} returns this
+ */
+proto.booking.BookingsByUserReply.BookingByUser.prototype.setBookingid = function(value) {
+  return jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+/**
+ * optional string parkingSlotName = 2;
  * @return {string}
  */
 proto.booking.BookingsByUserReply.BookingByUser.prototype.getParkingslotname = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -1229,17 +1261,17 @@ proto.booking.BookingsByUserReply.BookingByUser.prototype.getParkingslotname = f
  * @return {!proto.booking.BookingsByUserReply.BookingByUser} returns this
  */
 proto.booking.BookingsByUserReply.BookingByUser.prototype.setParkingslotname = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * optional google.protobuf.Timestamp startDate = 2;
+ * optional google.protobuf.Timestamp startDate = 3;
  * @return {?proto.google.protobuf.Timestamp}
  */
 proto.booking.BookingsByUserReply.BookingByUser.prototype.getStartdate = function() {
   return /** @type{?proto.google.protobuf.Timestamp} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 2));
+    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 3));
 };
 
 
@@ -1248,7 +1280,7 @@ proto.booking.BookingsByUserReply.BookingByUser.prototype.getStartdate = functio
  * @return {!proto.booking.BookingsByUserReply.BookingByUser} returns this
 */
 proto.booking.BookingsByUserReply.BookingByUser.prototype.setStartdate = function(value) {
-  return jspb.Message.setWrapperField(this, 2, value);
+  return jspb.Message.setWrapperField(this, 3, value);
 };
 
 
@@ -1266,17 +1298,17 @@ proto.booking.BookingsByUserReply.BookingByUser.prototype.clearStartdate = funct
  * @return {boolean}
  */
 proto.booking.BookingsByUserReply.BookingByUser.prototype.hasStartdate = function() {
-  return jspb.Message.getField(this, 2) != null;
+  return jspb.Message.getField(this, 3) != null;
 };
 
 
 /**
- * optional google.protobuf.Timestamp endDate = 3;
+ * optional google.protobuf.Timestamp endDate = 4;
  * @return {?proto.google.protobuf.Timestamp}
  */
 proto.booking.BookingsByUserReply.BookingByUser.prototype.getEnddate = function() {
   return /** @type{?proto.google.protobuf.Timestamp} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 3));
+    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 4));
 };
 
 
@@ -1285,7 +1317,7 @@ proto.booking.BookingsByUserReply.BookingByUser.prototype.getEnddate = function(
  * @return {!proto.booking.BookingsByUserReply.BookingByUser} returns this
 */
 proto.booking.BookingsByUserReply.BookingByUser.prototype.setEnddate = function(value) {
-  return jspb.Message.setWrapperField(this, 3, value);
+  return jspb.Message.setWrapperField(this, 4, value);
 };
 
 
@@ -1303,7 +1335,7 @@ proto.booking.BookingsByUserReply.BookingByUser.prototype.clearEnddate = functio
  * @return {boolean}
  */
 proto.booking.BookingsByUserReply.BookingByUser.prototype.hasEnddate = function() {
-  return jspb.Message.getField(this, 3) != null;
+  return jspb.Message.getField(this, 4) != null;
 };
 
 

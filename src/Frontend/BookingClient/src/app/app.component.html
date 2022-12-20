@@ -35,11 +35,15 @@
   src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
 />
 <span>Booking App</span>
+<div *ngIf="currentUser">
+  <button mat-stroked-button class="button-default" routerLink="/bookings">Bookings</button>
+  <button mat-stroked-button class="button-default" routerLink="/book-a-spot">Book a spot</button>
+</div>
   <div class="spacer"></div>
-  <button *ngIf="!currentUser" mat-stroked-button class="loginbutton" (click)="login()">Login</button>
+  <button *ngIf="!currentUser" mat-stroked-button class="button-default" (click)="login()">Login</button>
   <div *ngIf="currentUser">
-    <button mat-stroked-button class="loginbutton" routerLink="/app-profile">Profile</button>
-    <button mat-stroked-button class="loginbutton" (click)="logout()">Logout</button>
+    <button mat-stroked-button class="button-default" routerLink="/app-profile">Profile</button>
+    <button mat-stroked-button class="button-default" (click)="logout()">Logout</button>
   </div>
 </nav>
 

@@ -8,8 +8,8 @@ import * as jspb from "google-protobuf";
 import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/timestamp_pb";
 
 export class BookingRequest extends jspb.Message { 
-    getUserid(): number;
-    setUserid(value: number): BookingRequest;
+    getUserid(): string;
+    setUserid(value: string): BookingRequest;
 
     hasStartdate(): boolean;
     clearStartdate(): void;
@@ -33,7 +33,7 @@ export class BookingRequest extends jspb.Message {
 
 export namespace BookingRequest {
     export type AsObject = {
-        userid: number,
+        userid: string,
         startdate?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         enddate?: google_protobuf_timestamp_pb.Timestamp.AsObject,
     }
@@ -103,8 +103,8 @@ export namespace CancelBookingReply {
 }
 
 export class BookingsByUserRequest extends jspb.Message { 
-    getUserid(): number;
-    setUserid(value: number): BookingsByUserRequest;
+    getUserid(): string;
+    setUserid(value: string): BookingsByUserRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): BookingsByUserRequest.AsObject;
@@ -118,7 +118,7 @@ export class BookingsByUserRequest extends jspb.Message {
 
 export namespace BookingsByUserRequest {
     export type AsObject = {
-        userid: number,
+        userid: string,
     }
 }
 
@@ -145,6 +145,8 @@ export namespace BookingsByUserReply {
 
 
     export class BookingByUser extends jspb.Message { 
+        getBookingid(): number;
+        setBookingid(value: number): BookingByUser;
         getParkingslotname(): string;
         setParkingslotname(value: string): BookingByUser;
 
@@ -170,6 +172,7 @@ export namespace BookingsByUserReply {
 
     export namespace BookingByUser {
         export type AsObject = {
+            bookingid: number,
             parkingslotname: string,
             startdate?: google_protobuf_timestamp_pb.Timestamp.AsObject,
             enddate?: google_protobuf_timestamp_pb.Timestamp.AsObject,

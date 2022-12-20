@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'oidc-client-ts';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from './services/auth/auth.service';
 
 @Component({
   selector: 'app-root',

@@ -27,7 +27,7 @@ service GrpcBookingService {
 }
 
 message BookingRequest {
-  int32 userId = 1;
+  string userId = 1;
   google.protobuf.Timestamp startDate = 2;
   google.protobuf.Timestamp endDate = 3;
 }
@@ -46,14 +46,15 @@ message CancelBookingReply {
 }
 
 message BookingsByUserRequest{
-  int32 userId = 1;
+  string userId = 1;
 }
 
 message BookingsByUserReply{
   message BookingByUser{
-    string parkingSlotName = 1;
-    google.protobuf.Timestamp startDate = 2;
-    google.protobuf.Timestamp endDate = 3;
+    int32 bookingId = 1;
+    string parkingSlotName = 2;
+    google.protobuf.Timestamp startDate = 3;
+    google.protobuf.Timestamp endDate = 4;
   }
 
   repeated BookingByUser bookingsByUser = 1;

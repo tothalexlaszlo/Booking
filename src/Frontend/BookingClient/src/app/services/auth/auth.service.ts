@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User, UserManager, UserManagerSettings } from 'oidc-client-ts';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthService {
   public userManager: UserManager;
   private _currentUser: User | null = null;

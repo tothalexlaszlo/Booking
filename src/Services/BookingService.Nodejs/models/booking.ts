@@ -8,7 +8,7 @@ export class Booking {
     id: number;
 
     @Column()
-    userId: number;
+    userId: string;
 
     @ManyToOne(type => ParkingSlot, { nullable: false, onDelete: 'CASCADE', onUpdate: 'CASCADE', cascade: true })
     @JoinColumn()

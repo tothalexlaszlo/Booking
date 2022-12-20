@@ -14,7 +14,7 @@ export class BookingService {
 
     }
 
-    async getUserBookings(userId: number): Promise<Booking[] > {
+    async getUserBookings(userId: string): Promise<Booking[] > {
         let bookings = await this._bookingRepository.find({
             where: {
                 userId: userId
@@ -27,7 +27,7 @@ export class BookingService {
         return bookings;
     }
 
-    async bookParkingSlot(userId: number, startDate: Date, endDate: Date): Promise<string> {
+    async bookParkingSlot(userId: string, startDate: Date, endDate: Date): Promise<string> {
 
         if (startDate.getTime() + 60 * 60 * 1000 > endDate.getTime()) {
             throw new Error("Requested booking's period was below required minimum.");
