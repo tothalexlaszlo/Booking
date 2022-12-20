@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User, UserManager, UserManagerSettings } from 'oidc-client-ts';
+import { from, map, Observable } from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -28,8 +29,9 @@ export class AuthService {
     this._currentUser = await this.userManager.getUser();
   }
 
-  public async login(): Promise<void> {
-    await this.userManager.signinRedirect();
+  public login(): Observable<User | null> {
+    return from(this.userManager.signinRedirect())
+    .pipe(map(() => this._currentUser));
   }
 
   public renewToken(): Promise<User | null> {

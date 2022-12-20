@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { User } from 'oidc-client-ts';
+import { from, Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/services/auth/auth.service';
 
@@ -10,6 +11,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class MenuComponent {
   @Input() public currentUser: User | null = null;
+
+  private _login$!: Subscription;
 
   constructor(private readonly _authService: AuthService) {
   }
@@ -23,8 +26,18 @@ export class MenuComponent {
   }
 
   login(): void {
-
+    this._authService.login()
+    .subscribe({
+      next: validUser => this.currentUser = validUser,
+      error: () => {
+        //bad case
+      }
+    });
   }
-  logout(): void {}
+
+
+
+  logout(): void {
+  }
 
 }
