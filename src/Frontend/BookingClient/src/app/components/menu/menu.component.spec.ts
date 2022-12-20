@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 import { MenuComponent } from './menu.component';
 
@@ -8,7 +9,10 @@ describe('MenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MenuComponent ]
+      declarations: [ MenuComponent ],
+      providers: [
+        { provide: AuthService, useClass: undefined}
+      ]
     })
     .compileComponents();
 
@@ -17,7 +21,7 @@ describe('MenuComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  fit('should create', () => {
     expect(component).toBeTruthy();
   });
 });
