@@ -30,7 +30,7 @@ export class MockAuthService {
     return Promise.resolve({access_token: newToken} as User);
   }
 
-  public logout(): Observable<void> {
-    return of();
+  public logout(): Promise<void> {
+    return Promise.resolve();
   }
 }

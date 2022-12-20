@@ -38,6 +38,7 @@ export class MenuComponent {
 
 
   logout(): void {
+    this._authService.logout()
+    .then(() => this.currentUser = null);
   }
-
 }

@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { User } from 'oidc-client-ts';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { MockAuthService } from 'src/test/services/auth.service';
 
@@ -31,4 +32,14 @@ describe('MenuComponent', () => {
     component.login();
     expect(component.currentUser).not.toBeNull();
   });
+
+  fit('should logout user', waitForAsync(() => {
+    component.login();
+    component.logout();
+    fixture.whenStable().then(() => {
+      expect(component.currentUser).toBeNull();
+    });
+    
+  
+  }));
 });
