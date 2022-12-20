@@ -15,7 +15,6 @@ internal sealed class GrpcBookingService : Grpc.BookingService.GrpcBookingServic
         _bookingService = bookingService ?? throw new ArgumentNullException(nameof(bookingService));
     }
 
-    [Authorize]
     public override async Task<BookingsByUserReply> GetActiveBookingsByUser(BookingsByUserRequest request, ServerCallContext context)
     {
         var activeBookingsForUser = await _bookingService.GetActiveBookingsByUserAsync(request.UserId);

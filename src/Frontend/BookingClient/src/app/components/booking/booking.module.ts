@@ -11,7 +11,7 @@ import { GrpcWebClientModule } from '@ngx-grpc/grpc-web-client';
   imports: [
     GrpcCoreModule.forRoot(),
     GrpcWebClientModule.forRoot({
-      settings: { host: 'http://localhost:3000' },
+      settings: { host: 'https://localhost:443' },
     }),
     CommonModule
   ]
