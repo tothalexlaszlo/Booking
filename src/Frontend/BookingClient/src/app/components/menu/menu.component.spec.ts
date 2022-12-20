@@ -23,5 +23,11 @@ describe('MenuComponent', () => {
 
   fit('should create', () => {
     expect(component).toBeTruthy();
+    expect(component.currentUser).toBeNull();
+  });
+
+  fit('should get user after login', () => {
+    component.login();
+    expect(component.currentUser).not.toBeNull();
   });
 });
