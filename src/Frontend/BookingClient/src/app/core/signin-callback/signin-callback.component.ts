@@ -11,7 +11,7 @@ export class SigninCallbackComponent implements OnInit {
 
   async ngOnInit() {
     await this._authService.userManager.signinCallback();
-    await this._authService.initialize();
-    this._router.navigate(['app-profile']);
+    this._authService.initialize();
+    this._router.navigate(['booking']);
   }
 }

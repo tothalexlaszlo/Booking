@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { User, UserManager, UserManagerSettings } from 'oidc-client-ts';
+import { from } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
   public userManager: UserManager;
-  private _currentUser: User | null = null;
+  public currentUser: User | null = null;
 
   constructor() {
     const settings : UserManagerSettings = {
@@ -18,14 +21,16 @@ export class AuthService {
     };
 
     this.userManager = new UserManager(settings);
+    console.log('AuthService constructed');
+
+    this.initialize();
   }
 
-  get currentUser(): User | null {
-    return this._currentUser;
-  }
-
-  public async initialize(): Promise<void> {
-    this._currentUser = await this.userManager.getUser();
+  public initialize(): void {
+    from(this.userManager.getUser()).subscribe(user => {
+      this.currentUser = user;
+      console.log('Got user');
+    });
   }
 
   public async login(): Promise<void> {

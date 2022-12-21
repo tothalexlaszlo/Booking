@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BookingService } from 'src/app/services/booking/booking.service';
 
 @Component({
@@ -9,6 +9,7 @@ export class BookingListComponent {
   public bookings$ = this._bookingService.bookingsByUser$;
 
   constructor(private readonly _bookingService: BookingService) {
+    console.log('BookingList');
   }
 
   public cancelBooking(bookingId: number) {

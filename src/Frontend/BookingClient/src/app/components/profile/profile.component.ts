@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class ProfileComponent {
 
   constructor(public readonly _authService: AuthService) {
+    console.log('ProfileComponent');
   }
 
   get currentUserJson(): string {

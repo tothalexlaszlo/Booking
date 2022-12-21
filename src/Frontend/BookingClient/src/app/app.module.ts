@@ -8,7 +8,6 @@ import { AuthModule } from './services/auth/auth.module';
 import { AppComponent } from './app.component';
 import { SigninCallbackComponent } from './core/signin-callback/signin-callback.component';
 import { SignoutCallbackComponent } from './core/signout-callback/signout-callback.component';
-import { AuthService } from './services/auth/auth.service';
 import { ProfileComponent } from './components/profile/profile.component';
 import { BookingModule } from './components/booking/booking.module';
 
@@ -27,7 +26,7 @@ import { BookingModule } from './components/booking/booking.module';
     BookingModule,
     AppRoutingModule
   ],
-  providers: [AuthService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

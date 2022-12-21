@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { BookingListComponent } from './booking-list/booking-list.component';
 import { GrpcCoreModule } from '@ngx-grpc/core';
 import { GrpcWebClientModule } from '@ngx-grpc/grpc-web-client';
+import { BookingRoutingModule } from './booking-routing.module';
+import { BookingService } from 'src/app/services/booking/booking.service';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,9 @@ import { GrpcWebClientModule } from '@ngx-grpc/grpc-web-client';
     GrpcWebClientModule.forRoot({
       settings: { host: 'https://localhost:443' },
     }),
-    CommonModule
-  ]
+    CommonModule,
+    BookingRoutingModule
+  ],
+  providers: [BookingService]
 })
 export class BookingModule { }
