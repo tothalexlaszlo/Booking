@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { User } from 'oidc-client-ts';
-import { from, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/services/auth/auth.service';
 
@@ -9,36 +9,51 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent {
+export class MenuComponent implements OnChanges, OnDestroy {
   @Input() public currentUser: User | null = null;
 
+  public isUserLoggedIn = false;
   private _login$!: Subscription;
 
   constructor(private readonly _authService: AuthService) {
   }
 
-  ngOnInit() {
-
+  ngOnChanges(): void {
+    this.isUserLoggedIn = this._isUserAuthValid();
   }
 
-  ngAfterViewInit() {
-
+  ngOnDestroy(): void {
+    if (this._login$) {
+      this._login$.unsubscribe();
+    }
   }
 
   login(): void {
-    this._authService.login()
+    this._login$ = this._authService.login()
     .subscribe({
-      next: validUser => this.currentUser = validUser,
+      next: validUser => {
+        this.currentUser = validUser;
+        this.isUserLoggedIn = this._isUserAuthValid();
+      },
       error: () => {
-        //bad case
+        // TODO: alert.window display error.
       }
     });
   }
 
-
-
   logout(): void {
     this._authService.logout()
-    .then(() => this.currentUser = null);
+    .then(() => {
+      this.currentUser = null;
+      this.isUserLoggedIn = this._isUserAuthValid();
+    });
+  }
+
+  /**
+   * Returns true if the currentUser exists and it has token.
+   * @returns boolean
+   */
+  private _isUserAuthValid(): boolean {
+    return !!this.currentUser && this.currentUser.access_token.length > 0;
   }
 }
