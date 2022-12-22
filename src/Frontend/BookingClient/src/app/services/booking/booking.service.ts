@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Timestamp } from '@ngx-grpc/well-known-types';
 import { map, Observable } from 'rxjs';
-import { BookingModule } from 'src/app/components/booking/booking.module';
+
 import {
   BookingReply,
   BookingRequest,

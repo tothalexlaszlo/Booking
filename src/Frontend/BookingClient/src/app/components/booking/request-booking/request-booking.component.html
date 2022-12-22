@@ -1,0 +1,42 @@
+<P>Get new booking</P>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th><strong>Start date</strong></th>
+      <th><strong>End date</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <mat-form-field>
+          <input matInput [ngxMatDatetimePicker]="startDatePicker"
+            placeholder="Choose a date" [formControl]="startDateControl" [min]="minDate" [max]="(endDateControl.value!.getTime() - (1000 * 60 * 60))">
+          <mat-datepicker-toggle matSuffix [for]="$any(startDatePicker)"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #startDatePicker [color]="color">
+          </ngx-mat-datetime-picker>
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput [ngxMatDatetimePicker]="endDatePicker"
+            placeholder="Choose a date" [formControl]="endDateControl" [min]="(startDateControl.value!.getTime() + (1000 * 60 * 60))" [max]="maxDate">
+          <mat-datepicker-toggle matSuffix [for]="$any(endDatePicker)"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #endDatePicker [color]="color">
+          </ngx-mat-datetime-picker>
+        </mat-form-field>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>
+        Date: {{startDateControl.value?.toLocaleString()}}
+      </th>
+      <th>
+        Date: {{endDateControl.value?.toLocaleString()}}
+      </th>
+    </tr>
+  </tfoot>
+</table>

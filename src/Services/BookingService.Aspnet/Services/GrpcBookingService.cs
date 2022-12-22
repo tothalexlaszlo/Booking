@@ -33,7 +33,8 @@ internal sealed class GrpcBookingService : Grpc.BookingService.GrpcBookingServic
             {
                 ParkingSlotName = activeBooking.ParkingSlot.Name,
                 StartDate = Timestamp.FromDateTime(activeBooking.StartDate),
-                EndDate = Timestamp.FromDateTime(activeBooking.EndDate)
+                EndDate = Timestamp.FromDateTime(activeBooking.EndDate),
+                BookingId = activeBooking.Id
             };
 
             reply.BookingsByUser.Add(bookingReply);
