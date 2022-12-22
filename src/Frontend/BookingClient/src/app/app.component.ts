@@ -8,24 +8,21 @@ import { AuthService } from './services/auth/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'BookingClient';
+  public title = 'BookingClient';
+  public currentUser: User | null;
 
   constructor(private _authService: AuthService) {
+    this.currentUser = null;
   }
 
-  get currentUser() : User | null {
-    return this._authService.currentUser;
+  ngOnInit(): void {
+    this._authService.initialize()
+    .then(() => this._login())
+    .then(() => this.currentUser = this._authService.currentUser)
+    .catch(() => this.currentUser = null)
   }
 
-  async ngOnInit(): Promise<void> {
-    await this._authService.initialize();
-  }
-
-  async login() : Promise<void> {
+  private async _login() : Promise<void> {
     await this._authService.login();
-  }
-
-  logout() : void {
-    this._authService.logout();
   }
 }
