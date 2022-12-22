@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { User } from 'oidc-client-ts';
+import { Subscription } from 'rxjs';
 import { AuthService } from './services/auth/auth.service';
 
 @Component({
@@ -7,21 +8,17 @@ import { AuthService } from './services/auth/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'BookingClient';
+export class AppComponent implements OnDestroy {
+  public title = 'BookingClient';
+  public currentUser: User | null = null;
+  private _cleanup: Subscription = Subscription.EMPTY;
 
   constructor(private _authService: AuthService) {
+    this._cleanup = this._authService.loggedInUser$.subscribe(user => this.currentUser = user);
   }
 
-  get currentUser() : User | null {
-    return this._authService.currentUser;
+  ngOnDestroy(): void {
+    this._cleanup.unsubscribe();
   }
 
-  async login() : Promise<void> {
-    await this._authService.login();
-  }
-
-  logout() : void {
-    this._authService.logout();
-  }
 }

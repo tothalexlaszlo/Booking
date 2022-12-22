@@ -1,0 +1,18 @@
+<nav class="toolbar" role="banner">
+  <img width="40" src="assets/photos/logo.png"/>
+  <span>Booking App</span>
+
+  <div *ngIf="isUserLoggedIn">
+    <a [id]="'toolbar-booking'" mat-stroked-button class="button-default" routerLink="/booking">Bookings</a>
+    <a [id]="'toolbar-bookingSpot'" mat-stroked-button class="button-default" routerLink="/booking/new">Book a spot</a>
+  </div>
+  <div class="spacer"></div>
+
+  <div *ngIf="isUserLoggedIn">
+    <a [id]="'toolbar-profile'" mat-stroked-button class="button-default" routerLink="/app-profile">Profile</a>
+    <button [id]="'toolbar-logout'" mat-stroked-button class="button-default" (click)="logout()">Logout</button>
+  </div>
+  <div *ngIf="!isUserLoggedIn">
+    <button [id]="'toolbar-login'" mat-stroked-button class="button-default" (click)="login()">Login</button>
+  </div>
+</nav>

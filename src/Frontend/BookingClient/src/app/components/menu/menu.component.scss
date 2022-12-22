@@ -1,0 +1,32 @@
+.toolbar {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background-color: #196428;
+  color: white;
+  font-weight: 600;
+}
+
+.button-default {
+  margin: 10px;
+  border-color: #000000;
+  border-radius: 2px;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.button-default:hover {
+  background-color: #6487b3;
+}
+
+
+.toolbar img {
+  margin: 0 16px;
+}
+
+.spacer {
+  flex: 1;
+}

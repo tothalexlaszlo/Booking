@@ -10,8 +10,8 @@ export class SigninCallbackComponent implements OnInit {
   constructor(private readonly _router: Router, private readonly _authService: AuthService) {}
 
   async ngOnInit() {
-    await this._authService.userManager.signinCallback();
-    this._authService.initialize();
-    this._router.navigate(['booking']);
+    this._authService.userManager.signinCallback()
+    .then(() => this._authService.initialize())
+    .then(() => this._router.navigate(['booking']));
   }
 }
