@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { User } from 'oidc-client-ts';
-import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/services/auth/auth.service';
 
@@ -9,11 +8,10 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent implements OnChanges, OnDestroy {
+export class MenuComponent implements OnChanges {
   @Input() public currentUser: User | null = null;
 
   public isUserLoggedIn = false;
-  private _login$!: Subscription;
 
   constructor(private readonly _authService: AuthService) {
   }
@@ -22,23 +20,8 @@ export class MenuComponent implements OnChanges, OnDestroy {
     this.isUserLoggedIn = this._isUserAuthValid();
   }
 
-  ngOnDestroy(): void {
-    if (this._login$) {
-      this._login$.unsubscribe();
-    }
-  }
-
   login(): void {
-    this._login$ = this._authService.login()
-    .subscribe({
-      next: validUser => {
-        this.currentUser = validUser;
-        this.isUserLoggedIn = this._isUserAuthValid();
-      },
-      error: () => {
-        // TODO: alert.window display error.
-      }
-    });
+    this._authService.login();
   }
 
   logout(): void {

@@ -1,16 +1,18 @@
 <div *ngIf="bookings$ | async as bookings">
-  <div class="card"  *ngFor="let booking of bookings">
-    <div class="card-header">
-      <div>{{booking.bookingId}}</div>
-      <div class="spacer"></div>
-      <button onclick="cancelBooking(booking.bookingId)">Delete</button>
-    </div>
 
-    <div class="card-body">
-      <p>{{booking.startDate}}</p>
-      <p>{{booking.endDate}}</p>
-      <p>{{booking.parkingSlotName}}</p>
-    </div>
-  </div>
+  <mat-card class="card" style="width: 30%;" *ngFor="let booking of bookings">
+    <mat-card-header class="cardHeader">
+      <mat-card-title>{{booking.bookingId}}</mat-card-title>
+      <div class="spacer"></div>
+      <button mat-raised-button color="warn" (click)="cancelBooking(booking.bookingId)">Cancel</button>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <div>From: {{booking.startDate | timestampToDate}}</div>
+      <div>To: {{booking.endDate | timestampToDate}}</div>
+      <div>Parking spot: {{booking.parkingSlotName}}</div>
+    </mat-card-content>
+  </mat-card>
 </div>
+
 

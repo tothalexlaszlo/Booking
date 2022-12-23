@@ -20,3 +20,14 @@
   text-align: right;
 }
 
+.button-default {
+  margin: 10px;
+  border-color: #000000;
+  border-radius: 2px;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.button-default:hover {
+  background-color: #6487b3;
+}

@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { User, UserManager, UserManagerSettings } from 'oidc-client-ts';
-import { from, map, Observable } from 'rxjs';
+import { from, Subject } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
   public userManager: UserManager;
-  private _currentUser: User | null = null;
+  public loggedInUser$: Subject<User | null> = new Subject();
+  public currentUser: User | null = null;
 
   constructor() {
     const settings : UserManagerSettings = {
@@ -19,19 +22,21 @@ export class AuthService {
     };
 
     this.userManager = new UserManager(settings);
-  }
+    console.log('AuthService constructed');
 
-  get currentUser(): User | null {
-    return this._currentUser;
+    this.initialize();
   }
 
   public async initialize(): Promise<void> {
-    this._currentUser = await this.userManager.getUser();
+    from(this.userManager.getUser()).subscribe(user => {
+      this.currentUser = user;
+      this.loggedInUser$.next(user);
+      console.log('Got user');
+    });
   }
 
-  public login(): Observable<User | null> {
-    return from(this.userManager.signinRedirect())
-    .pipe(map(() => this._currentUser));
+  public login(): Promise<void> {
+    return this.userManager.signinRedirect()
   }
 
   public renewToken(): Promise<User | null> {

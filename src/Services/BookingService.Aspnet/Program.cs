@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
 #region Logger
@@ -36,12 +37,25 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(filePath);
     c.IncludeGrpcXmlComments(filePath, includeControllerXmlComments: true);
 });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
 #endregion
 
 var app = builder.Build();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
+
+app.UseCors(MyAllowSpecificOrigins);
+app.UseGrpcWeb();
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -53,7 +67,7 @@ app.UseSwaggerUI(c =>
 });
 
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
-app.MapGrpcService<GrpcBookingService>();
+app.MapGrpcService<GrpcBookingService>().EnableGrpcWeb();
 
 await using var scope = app.Services.CreateAsyncScope();
 using var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
