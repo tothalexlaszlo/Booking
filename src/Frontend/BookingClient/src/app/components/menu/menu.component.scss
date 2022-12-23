@@ -5,8 +5,25 @@
   font-weight: 600;
 }
 
-.toolbar img {
-  margin: 0 16px;
+.toolbar-header {
+  height: inherit;
+}
+
+.toolbar-header div {
+  float: left;
+}
+
+.toolbar-header-bg-img {
+  background-image: url('../../../assets/photos/angular-icon.png');
+  background-repeat: no-repeat;
+  background-attachment: local;
+  background-position: center;
+  background-size: 58px;
+  padding: 10px;
+}
+
+.toolbar-header-title {
+  padding-top: 1.2rem;
 }
 
 .toolbar-menu > a {

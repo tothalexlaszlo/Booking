@@ -1,11 +1,15 @@
 <nav class="toolbar" role="banner">
-  <div class="toolbar-header">
-    <img alt="Angular with dog"
-         width="40"
-         src="assets/photos/logo.png"
-    />
-    <span>Booking App</span>
-  </div>
+  <mat-grid-list [cols]="4" [rowHeight]="'60px'" [gutterSize]="'10px'">
+    <mat-grid-tile [rowspan]="1" [colspan]="1">
+      <div class="toolbar-header">
+        <div class="toolbar-header-bg-img">
+          <img alt="Angular with dog"
+          width="40"
+          src="assets/photos/logo.png"/>
+        </div>
+        <div class="toolbar-header-title">Booking App</div>
+      </div>
+    </mat-grid-tile>
 
     <mat-grid-tile [rowspan]="1" [colspan]="2">
       <div *ngIf="isUserLoggedIn" class="toolbar-menu">
