@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BookingModule } from './components/booking/booking.module';
@@ -23,6 +24,7 @@ import { CoreModule } from './core/core.module';
     BrowserAnimationsModule,
     MatButtonModule,
     CoreModule,
+    MatGridListModule,
     AuthModule,
     BookingModule,
     AppRoutingModule

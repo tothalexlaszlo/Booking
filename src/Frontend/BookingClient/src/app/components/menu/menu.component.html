@@ -1,18 +1,40 @@
 <nav class="toolbar" role="banner">
-  <img width="40" src="assets/photos/logo.png"/>
-  <span>Booking App</span>
+  <mat-grid-list [cols]="4" [rowHeight]="'60px'" [gutterSize]="'10px'">
+    <mat-grid-tile [rowspan]="1" [colspan]="1">
+      <div class="toolbar-header">
+        <div class="toolbar-header-bg-img">
+          <img alt="Angular with dog"
+          width="40"
+          src="assets/photos/logo.png"/>
+        </div>
+        <div class="toolbar-header-title">Booking App</div>
+      </div>
+    </mat-grid-tile>
 
-  <div *ngIf="isUserLoggedIn">
-    <a [id]="'toolbar-booking'" mat-stroked-button class="button-default" routerLink="/booking">Bookings</a>
-    <a [id]="'toolbar-bookingSpot'" mat-stroked-button class="button-default" routerLink="/booking/new">Book a spot</a>
-  </div>
-  <div class="spacer"></div>
+    <mat-grid-tile [rowspan]="1" [colspan]="2">
+      <div *ngIf="isUserLoggedIn" class="toolbar-menu">
+        <a [id]="'toolbar-booking'" 
+          mat-stroked-button class="button-default" routerLink="/bookings">Bookings</a>
+        <a [id]="'toolbar-bookingSpot'"
+          mat-stroked-button class="button-default" routerLink="/booking/new">Book a spot</a>
+      </div>
+    </mat-grid-tile>
 
-  <div *ngIf="isUserLoggedIn">
-    <a [id]="'toolbar-profile'" mat-stroked-button class="button-default" routerLink="/app-profile">Profile</a>
-    <button [id]="'toolbar-logout'" mat-stroked-button class="button-default" (click)="logout()">Logout</button>
-  </div>
-  <div *ngIf="!isUserLoggedIn">
-    <button [id]="'toolbar-login'" mat-stroked-button class="button-default" (click)="login()">Login</button>
-  </div>
+    <mat-grid-tile [rowspan]="1" [colspan]="1">
+      <div class="toolbar-right-place">
+        <div  *ngIf="isUserLoggedIn">
+          <a [id]="'toolbar-profile'"
+          mat-stroked-button class="button-default" routerLink="/app-profile">Profile</a>
+          <button [id]="'toolbar-logout'"
+                  mat-stroked-button class="button-default"
+                  (click)="logout()">Logout</button>
+        </div>
+        <div *ngIf="!isUserLoggedIn">
+          <button [id]="'toolbar-login'"
+                  mat-stroked-button class="button-default"
+                  (click)="login()">Login</button>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
 </nav>

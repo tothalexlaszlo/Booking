@@ -3,6 +3,7 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.spacer {
-  flex: 1;
+/* Header-toolbar: mat-grid-tile to be fit left */
+.toolbar .mat-grid-tile > .mat-grid-tile-content {
+    justify-content: unset !important;
 }

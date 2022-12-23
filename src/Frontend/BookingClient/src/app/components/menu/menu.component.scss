@@ -1,13 +1,40 @@
 .toolbar {
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  display: flex;
   align-items: center;
-  background-color: #196428;
+  background-color: #01ac2c;
   color: white;
   font-weight: 600;
+}
+
+.toolbar-header {
+  height: inherit;
+}
+
+.toolbar-header div {
+  float: left;
+}
+
+.toolbar-header-bg-img {
+  background-image: url('../../../assets/photos/angular-icon.png');
+  background-repeat: no-repeat;
+  background-attachment: local;
+  background-position: center;
+  background-size: 58px;
+  padding: 10px;
+}
+
+.toolbar-header-title {
+  padding-top: 1.2rem;
+}
+
+.toolbar-menu > a {
+  margin-right: 5px;
+}
+
+.toolbar-right-place {
+  display: block;
+  width: 100%;
+  padding-right: 10px;
+  text-align: right;
 }
 
 .button-default {
@@ -20,13 +47,4 @@
 
 .button-default:hover {
   background-color: #6487b3;
-}
-
-
-.toolbar img {
-  margin: 0 16px;
-}
-
-.spacer {
-  flex: 1;
 }
