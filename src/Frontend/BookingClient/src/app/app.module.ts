@@ -8,23 +8,21 @@ import { BookingModule } from './components/booking/booking.module';
 import { AuthModule } from './services/auth/auth.module';
 
 import { AppComponent } from './app.component';
-import { SigninCallbackComponent } from './core/signin-callback/signin-callback.component';
-import { SignoutCallbackComponent } from './core/signout-callback/signout-callback.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SigninCallbackComponent,
     ProfileComponent,
-    SignoutCallbackComponent,
     MenuComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    CoreModule,
     AuthModule,
     BookingModule,
     AppRoutingModule
