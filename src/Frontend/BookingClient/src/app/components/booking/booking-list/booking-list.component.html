@@ -1,7 +1,7 @@
 <div *ngIf="bookings$ | async as bookings">
 
   <mat-card class="card" style="width: 30%;" *ngFor="let booking of bookings">
-    <mat-card-header class="cardHeader">
+    <mat-card-header class="card-header">
       <mat-card-title>{{booking.bookingId}}</mat-card-title>
       <div class="spacer"></div>
       <button mat-raised-button color="warn" (click)="cancelBooking(booking.bookingId)">Cancel</button>

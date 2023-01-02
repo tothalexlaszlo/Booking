@@ -6,6 +6,12 @@
   margin: 10px 0px 0px 10px;
 }
 
-.cardHeader {
+.card-header {
   padding: 10px;
+  align-items: flex-end;
 }
+
+.spacer {
+  flex: 1;
+}
+
