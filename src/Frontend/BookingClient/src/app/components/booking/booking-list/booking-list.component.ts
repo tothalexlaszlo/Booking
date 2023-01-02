@@ -1,22 +1,34 @@
 import { Component, OnDestroy } from '@angular/core';
-import { BehaviorSubject, combineLatest, map, Subject, Subscription } from 'rxjs';
+import { catchError, combineLatest, filter, map, merge, scan, startWith, Subject, Subscription, tap } from 'rxjs';
 import { BookingService } from 'src/app/services/booking/booking.service';
+import { BookingsByUserReply, BookingsByUserRequest } from '../protos/booking.pb';
 
 @Component({
   templateUrl: './booking-list.component.html',
   styleUrls: ['./booking-list.component.scss']
 })
 export class BookingListComponent implements OnDestroy {
-  private cancellationSubject = new BehaviorSubject<boolean>(true);
+  private deletionSubject = new Subject<number>();
   private _subscription: Subscription = Subscription.EMPTY;
 
-  public bookings$ = combineLatest([
-    this._bookingService.bookingsByUser$,
-    this.cancellationSubject
-  ]).pipe(map((value) => value[0]));
+  public bookings$ = merge(this._bookingService.bookingsByUser$, this.deletionSubject)
+  .pipe(
+    scan((accumulator, value) => {
+      if (typeof(value) === "number") {
+        var index = (accumulator as BookingsByUserReply.BookingByUser[]).findIndex((element) => element.bookingId === value);
+        (accumulator as BookingsByUserReply.BookingByUser[]).splice(index, 1);
+        return accumulator;
+      } else {
+        return (accumulator as BookingsByUserReply.BookingByUser[]).concat(value);
+      }
+    }),
+    map(x => x as BookingsByUserReply.BookingByUser[]),
+    catchError(err => {
+      throw err;
+    })
+  );
 
   constructor(private readonly _bookingService: BookingService) {
-    console.log('BookingList');
   }
 
   ngOnDestroy(): void {
@@ -25,10 +37,14 @@ export class BookingListComponent implements OnDestroy {
 
   public cancelBooking(bookingId: number) {
     this._subscription.unsubscribe();
-    this._bookingService.cancelBooking(bookingId)
+    this._subscription = this._bookingService.cancelBooking(bookingId)
       .subscribe({
-        next: () => this.cancellationSubject.next(true),
+        next: () => this.deletionSubject.next(bookingId),
         error: console.error
       });
+  }
+
+  private isBookingByUserArray(obj: any): boolean {
+    return Array.isArray(obj) && obj[0] instanceof BookingsByUserReply.BookingByUser;
   }
 }
