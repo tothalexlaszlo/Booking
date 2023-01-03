@@ -43,8 +43,4 @@ export class BookingListComponent implements OnDestroy {
         error: console.error
       });
   }
-
-  private isBookingByUserArray(obj: any): boolean {
-    return Array.isArray(obj) && obj[0] instanceof BookingsByUserReply.BookingByUser;
-  }
 }
