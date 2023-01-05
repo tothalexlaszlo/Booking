@@ -12,6 +12,7 @@ export class MenuComponent implements OnChanges {
   @Input() public currentUser: User | null = null;
 
   public isUserLoggedIn = false;
+  public isExpanded: boolean = false;
 
   constructor(private readonly _authService: AuthService) {
   }

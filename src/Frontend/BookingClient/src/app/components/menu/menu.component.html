@@ -1,37 +1,57 @@
-<nav class="toolbar" role="banner">
-  <mat-grid-list [cols]="2" [rowHeight]="'60px'" [gutterSize]="'10px'">
-    <mat-grid-tile [rowspan]="1" [colspan]="1">
-      <div class="toolbar-header">
-        <div class="toolbar-header-bg-img">
-          <img alt="Angular with dog"
-          width="40"
-          src="assets/photos/logo.png"/>
-        </div>
-        <div class="toolbar-header-title">Booking App</div>
+<div class="main-div">
+  <mat-toolbar id="appToolbar" class="toolbar">
+    <div class="toolbar-header">
+      <div class="toolbar-header-bg-img">
+        <img alt="Angular with dog" width="40" src="assets/photos/logo.png"/>
       </div>
-      <div *ngIf="isUserLoggedIn" class="toolbar-menu">
-        <a [id]="'toolbar-booking'"
-          mat-stroked-button class="button-default" routerLink="/booking">Bookings</a>
-        <a [id]="'toolbar-bookingSpot'"
-          mat-stroked-button class="button-default" routerLink="/booking/new">Book a spot</a>
-      </div>
-    </mat-grid-tile>
+      <div class="toolbar-header-title">Booking App</div>
+    </div>
+    <button *ngIf="isUserLoggedIn" mat-icon-button (click)="sidenav.toggle()" class="md-icon-button sidenav-toggle-button" [hidden]="sidenav.opened">
+      <mat-icon aria-label="Menu">menu</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <button mat-flat-button *ngIf="!isUserLoggedIn" [id]="'toolbar-login'" class="button" (click)="login()">Login</button>
+  </mat-toolbar>
 
-    <mat-grid-tile [rowspan]="1" [colspan]="1">
-      <div class="toolbar-right-place">
-        <div  *ngIf="isUserLoggedIn">
-          <a [id]="'toolbar-profile'"
-          mat-stroked-button class="button-default" routerLink="/app-profile">Profile</a>
-          <button [id]="'toolbar-logout'"
-                  mat-stroked-button class="button-default"
-                  (click)="logout()">Logout</button>
-        </div>
-        <div *ngIf="!isUserLoggedIn">
-          <button [id]="'toolbar-login'"
-                  mat-stroked-button class="button-default"
-                  (click)="login()">Login</button>
-        </div>
-      </div>
-    </mat-grid-tile>
-  </mat-grid-list>
-</nav>
+  <mat-sidenav-container class="sidenav">
+    <mat-sidenav #sidenav mode="side">
+      <mat-toolbar class="toolbar">
+        <span class="spacer"></span>
+        <button mat-icon-button (click)="sidenav.toggle()" [hidden]="!sidenav.opened">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-toolbar>
+      <mat-nav-list *ngIf="isUserLoggedIn">
+
+        <a mat-list-item [id]="'toolbar-profile'" routerLink="/app-profile"(click)="sidenav.toggle()">
+          <mat-icon>perm_identity</mat-icon>
+          <span>Profile</span>
+        </a>
+
+        <mat-divider></mat-divider>
+
+        <a mat-list-item [id]="'toolbar-booking'" routerLink="/booking" (click)="sidenav.toggle()">
+          <mat-icon>library_books</mat-icon>
+          <span class="title" md-line>My bookings</span>
+        </a>
+
+        <a mat-list-item [id]="'toolbar-bookingSpot'" routerLink="/booking/new" (click)="sidenav.toggle()">
+          <mat-icon>library_add</mat-icon>
+          <span class="title" md-line>Book a spot</span>
+        </a>
+
+        <mat-divider></mat-divider>
+
+        <a mat-list-item [id]="'toolbar-logout'" (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </a>
+
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+
+      <router-outlet class="router-area"></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

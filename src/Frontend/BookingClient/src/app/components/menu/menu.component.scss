@@ -1,8 +1,21 @@
+.main-div {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+}
+
 .toolbar {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
   align-items: center;
   background-color: #196428;
   color: white;
   font-weight: 600;
+  .button {
+    background-color: #196428;
+    color: white;
+  }
 }
 
 .toolbar-header {
@@ -11,6 +24,20 @@
 
 .toolbar-header div {
   float: left;
+}
+
+.sidenav {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  height: 100%;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.router-area {
+  max-width: 100vw
 }
 
 .toolbar-header-bg-img {
@@ -24,28 +51,5 @@
 
 .toolbar-header-title {
   padding-left: 10px;
-  padding-top: 1.2rem;
-}
-
-.toolbar-menu > a {
-  margin-right: 5px;
-}
-
-.toolbar-right-place {
-  display: block;
-  width: 100%;
-  padding-right: 10px;
-  text-align: right;
-}
-
-.button-default {
-  margin: 10px;
-  border-color: #000000;
-  border-radius: 2px;
-  border-width: 2px;
-  border-style: solid;
-}
-
-.button-default:hover {
-  background-color: #6487b3;
+  padding-top: 1.1rem;
 }
