@@ -13,26 +13,24 @@
           <tr>
             <td>
               <mat-form-field>
-                <input matInput [ngxMatDatetimePicker]="startDatePicker"
-                  placeholder="Choose a date" [formControl]="startDateControl" [min]="minDate" [max]="maxDate">
+                <input matInput [ngxMatDatetimePicker]="startDatePicker" placeholder="Choose a date" [formControl]="startDateControl"
+                  [min]="minDate" [max]="maxDate">
                 <mat-datepicker-toggle matSuffix [for]="$any(startDatePicker)"></mat-datepicker-toggle>
-                <ngx-mat-datetime-picker #startDatePicker [color]="'primary'">
-                </ngx-mat-datetime-picker>
+                <ngx-mat-datetime-picker #startDatePicker [color]="'primary'"></ngx-mat-datetime-picker>
               </mat-form-field>
             </td>
             <td>
-              <ngx-mat-timepicker [(ngModel)]="duration" [stepMinute]="30" [color]="'primary'" [showSpinners]="true">
-              </ngx-mat-timepicker>
+              <ngx-mat-timepicker [(ngModel)]="duration" [stepMinute]="30" [color]="'primary'" [showSpinners]="true"></ngx-mat-timepicker>
             </td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
             <th>
-              Date: {{startDateControl.value?.getTime()}}
+              Date: {{startDateControl.value?.toLocaleString()}}
             </th>
             <th>
-              Date: {{duration.toDate().getTime()}}
+              Date: {{duration.toDate().toLocaleString()}}
             </th>
           </tr>
         </tfoot>
