@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { GrpcMetadata } from '@ngx-grpc/common';
 import { Timestamp } from '@ngx-grpc/well-known-types';
 import { map, Observable } from 'rxjs';
 
@@ -14,8 +15,12 @@ import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class BookingService {
+  private _header: GrpcMetadata = new GrpcMetadata({
+    Authorization: `Bearer ${this._authService.currentUser?.access_token}`,
+  });
+
   public bookingsByUser$ : Observable<BookingsByUserReply.BookingByUser[]> = this._gRpcClient
-    .getActiveBookingsByUser(new BookingsByUserRequest({ userId: this._authService.currentUser?.profile.sub }))
+    .getActiveBookingsByUser(new BookingsByUserRequest({ userId: this._authService.currentUser?.profile.sub }), this._header)
     .pipe(map(bookingsReply => bookingsReply.bookingsByUser?.length ? bookingsReply.bookingsByUser : [] ));
 
   constructor(private _authService: AuthService, private readonly _gRpcClient: GrpcBookingServiceClient) {
@@ -23,7 +28,7 @@ export class BookingService {
   }
 
   public cancelBooking(bookingId: number): Observable<CancelBookingReply> {
-    return this._gRpcClient.cancelBooking(new CancelBookingRequest({ bookingId: bookingId}));
+    return this._gRpcClient.cancelBooking(new CancelBookingRequest({ bookingId: bookingId}), this._header);
   }
 
   public bookParkingSlot(startDate: Date, endDate: Date): Observable<BookingReply> {
@@ -34,6 +39,6 @@ export class BookingService {
         endDate: Timestamp.fromDate(endDate)
       });
 
-    return this._gRpcClient.bookParkingSlot(request);
+    return this._gRpcClient.bookParkingSlot(request, this._header);
   }
 }

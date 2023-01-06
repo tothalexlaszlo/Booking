@@ -1,6 +1,5 @@
-<div *ngIf="bookings$ | async as bookings">
-
-  <mat-card class="card" style="width: 30%;" *ngFor="let booking of bookings">
+<div *ngIf="bookings$ | async as bookings" class="centered-card-container">
+  <mat-card class="card" *ngFor="let booking of bookings">
     <mat-card-header class="card-header">
       <mat-card-title>{{booking.bookingId}}</mat-card-title>
       <div class="spacer"></div>
@@ -8,11 +7,9 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
+      <div>Parking spot: {{booking.parkingSlotName}}</div>
       <div>From: {{booking.startDate | timestampToDate}}</div>
       <div>To: {{booking.endDate | timestampToDate}}</div>
-      <div>Parking spot: {{booking.parkingSlotName}}</div>
     </mat-card-content>
   </mat-card>
 </div>
-
-

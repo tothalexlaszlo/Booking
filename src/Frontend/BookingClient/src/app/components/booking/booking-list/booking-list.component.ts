@@ -1,4 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, combineLatest, filter, map, merge, scan, startWith, Subject, Subscription, tap } from 'rxjs';
 import { BookingService } from 'src/app/services/booking/booking.service';
 import { BookingsByUserReply, BookingsByUserRequest } from '../protos/booking.pb';
@@ -28,7 +29,7 @@ export class BookingListComponent implements OnDestroy {
     })
   );
 
-  constructor(private readonly _bookingService: BookingService) {
+  constructor(private readonly _bookingService: BookingService, private _snackBar: MatSnackBar) {
   }
 
   ngOnDestroy(): void {
@@ -37,9 +38,17 @@ export class BookingListComponent implements OnDestroy {
 
   public cancelBooking(bookingId: number) {
     this._subscription.unsubscribe();
+    this._snackBar.dismiss();
     this._subscription = this._bookingService.cancelBooking(bookingId)
       .subscribe({
-        next: () => this.deletionSubject.next(bookingId),
+        next: () => {
+          this.deletionSubject.next(bookingId);
+          this._snackBar.open(`Booking with id ${bookingId} has been cancelled`, undefined, {
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            duration: 1000
+          });
+        },
         error: console.error
       });
   }

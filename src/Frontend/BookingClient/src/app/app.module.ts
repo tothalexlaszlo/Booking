@@ -17,12 +17,14 @@ import { AppComponent } from './app.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { CoreModule } from './core/core.module';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProfileComponent,
-    MenuComponent
+    MenuComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

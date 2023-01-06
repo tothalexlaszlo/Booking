@@ -1,3 +1,4 @@
+using BookingService.Aspnet.Exceptions;
 using BookingService.Aspnet.Models;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.BookingService;
@@ -15,6 +16,7 @@ internal sealed class GrpcBookingService : Grpc.BookingService.GrpcBookingServic
         _bookingService = bookingService ?? throw new ArgumentNullException(nameof(bookingService));
     }
 
+    [Authorize]
     public override async Task<BookingsByUserReply> GetActiveBookingsByUser(BookingsByUserRequest request, ServerCallContext context)
     {
         var activeBookingsForUser = await _bookingService.GetActiveBookingsByUserAsync(request.UserId);
@@ -43,17 +45,28 @@ internal sealed class GrpcBookingService : Grpc.BookingService.GrpcBookingServic
         return reply;
     }
 
+    [Authorize]
     public override async Task<BookingReply> BookParkingSlot(BookingRequest request, ServerCallContext context)
     {
-        var booking = await _bookingService.BookParkingSlotAsync(request.UserId, request.StartDate.ToDateTime(), request.EndDate.ToDateTime());
-        var reply = new BookingReply()
+        var reply = new BookingReply();
+        try
         {
-            BookingId = booking.Id,
-            ParkingSlotName = booking.ParkingSlot.Name
-        };
+            var booking = await _bookingService.BookParkingSlotAsync(request.UserId, request.StartDate.ToDateTime(), request.EndDate.ToDateTime());
+            reply.BookingId = booking.Id;
+            reply.ParkingSlotName = booking.ParkingSlot.Name;            
+        }
+        catch(InvalidBookingIntervalException ex)
+        {
+            context.Status = new Status(StatusCode.InvalidArgument, ex.Message);
+        }
+        catch(NoFreeParkingSlotException ex)
+        {
+            context.Status = new Status(StatusCode.AlreadyExists, ex.Message);
+        }
         return reply;
     }
 
+    [Authorize]
     public override Task<CancelBookingReply> CancelBooking(CancelBookingRequest request, ServerCallContext context)
     {
         _bookingService.CancelBooking(request.BookingId);

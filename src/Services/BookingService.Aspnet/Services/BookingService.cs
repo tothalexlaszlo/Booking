@@ -24,7 +24,7 @@ internal sealed class BookingService
     {
         if (startDate + TimeSpan.FromHours(1) > endDate || endDate - startDate > _maximumAllowedBookingPeriod)
         {
-            throw new InvalidBookingIntervalException();
+            throw new InvalidBookingIntervalException("Requested booking interval is invalid");
         }
 
         var parkingSlots = await _parkingSlotRepository.GetAllAsync();

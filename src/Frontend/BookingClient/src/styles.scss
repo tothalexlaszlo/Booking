@@ -7,3 +7,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .toolbar .mat-grid-tile > .mat-grid-tile-content {
     justify-content: unset !important;
 }
+
+.spacer {
+  flex: 1;
+}

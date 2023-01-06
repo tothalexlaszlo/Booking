@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>{{dialogTitle}}</h1>
+<div mat-dialog-content>
+  <p *ngIf="data.errorMessage">Something went wrong while trying to book a spot: {{data.errorMessage}}</p>
+  <div *ngIf="!data.errorMessage">
+    <div>Parking spot: {{data.parkingSpot}}</div>
+    <div>From: {{data.startDate?.toLocaleString()}}</div>
+    <div>To: {{data.endDate?.toLocaleString()}}</div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onOkClick()" cdkFocusInitial>Ok</button>
+</div>

@@ -1,9 +1,15 @@
+.centered-card-container {
+  margin: auto;
+  width: 50%;
+}
+
 .card {
+  width: 50%;
   border-color: #9c9c9c;
-  border-radius: 2px;
+  border-radius: 10px;
   border-width: 1px;
   border-style: solid;
-  margin: 10px 0px 0px 10px;
+  margin: 10px auto 0px auto;
 }
 
 .card-header {
@@ -11,7 +17,7 @@
   align-items: flex-end;
 }
 
-.spacer {
-  flex: 1;
+.rounded-border-button {
+  border-radius: 10px;
 }
 

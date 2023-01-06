@@ -31,7 +31,7 @@ export class AuthService {
     from(this.userManager.getUser()).subscribe(user => {
       this.currentUser = user;
       this.loggedInUser$.next(user);
-      console.log('Got user');
+      console.log(`Current user: ${user}`);
     });
   }
 
