@@ -16,7 +16,6 @@ internal sealed class GrpcBookingService : Grpc.BookingService.GrpcBookingServic
         _bookingService = bookingService ?? throw new ArgumentNullException(nameof(bookingService));
     }
 
-    [Authorize]
     public override async Task<BookingsByUserReply> GetActiveBookingsByUser(BookingsByUserRequest request, ServerCallContext context)
     {
         var activeBookingsForUser = await _bookingService.GetActiveBookingsByUserAsync(request.UserId);
@@ -45,7 +44,6 @@ internal sealed class GrpcBookingService : Grpc.BookingService.GrpcBookingServic
         return reply;
     }
 
-    [Authorize]
     public override async Task<BookingReply> BookParkingSlot(BookingRequest request, ServerCallContext context)
     {
         var reply = new BookingReply();
@@ -66,7 +64,6 @@ internal sealed class GrpcBookingService : Grpc.BookingService.GrpcBookingServic
         return reply;
     }
 
-    [Authorize]
     public override Task<CancelBookingReply> CancelBooking(CancelBookingRequest request, ServerCallContext context)
     {
         _bookingService.CancelBooking(request.BookingId);
