@@ -16,6 +16,7 @@ builder.Logging.ClearProviders().AddConsole();
 builder.Services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("BookingDatabase")));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<BookingService.Aspnet.Services.BookingService>();
+builder.Services.AddScoped<BookingService.Aspnet.Services.ParkingSlotService>();
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
