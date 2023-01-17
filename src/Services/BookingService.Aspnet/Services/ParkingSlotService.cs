@@ -12,10 +12,27 @@ internal class ParkingSlotService
         _parkingSlotRepository = parkingSlotRepository ?? throw new ArgumentNullException(nameof(parkingSlotRepository));
     }
 
-    public async Task<string?> GetParkingSlotNameById(int parkingSlotId)
-    {
-        var parkingSlot = await _parkingSlotRepository.FindByIdAsync(parkingSlotId);
+    public async Task<List<ParkingSlot>> GetParkingSlotsAsync() => await _parkingSlotRepository.GetAllAsync();
 
-        return parkingSlot?.Name;
+    public ParkingSlot CreateParkingSlot(string name)
+    {
+        var newParkingSlot = new ParkingSlot(name);
+        _parkingSlotRepository.Add(newParkingSlot);
+        _parkingSlotRepository.SaveChanges();
+
+        return newParkingSlot;
+    }
+
+    public void DeleteParkingSlot(int parkingSlotId)
+    {
+        _parkingSlotRepository.Delete(parkingSlotId);
+        _parkingSlotRepository.SaveChanges();
+    }
+
+    public void UpdateParkingSlot(ParkingSlot updatedParkingSlot)
+    {
+        _parkingSlotRepository.Update(updatedParkingSlot);
+        _parkingSlotRepository.SaveChanges();
+
     }
 }

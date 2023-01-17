@@ -62,5 +62,4 @@ internal sealed class BookingService
                                 || (startDate >= booking.StartDate && endDate <= booking.EndDate)
                                 || (startDate >= booking.StartDate && endDate >= booking.EndDate && startDate <= booking.EndDate);
     }
-
 }

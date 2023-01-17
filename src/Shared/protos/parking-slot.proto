@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "Grpc.ParkingSlotService";
+
+package parkingtSlot;
+
+service GrpcParkingSlotService {
+  rpc CreateParkingSlot (CreateParkingSlotRequest) returns (CreateParkingSlotReply){
+    option (google.api.http) = {
+      post: "/v1/parkingSlot",
+      body: "*"
+    };
+  }
+
+  rpc DeleteParkingSlot(DeleteParkingSlotByIdRequest) returns (DeleteParkingSlotByIdReply){
+    option (google.api.http) = {
+      delete:  "/v1/parkingSlot/{parkingSlotId}",
+    };
+  }
+
+  rpc GetParkingSlots(google.protobuf.Empty) returns (GetParkingSlotsReply){
+    option (google.api.http) = {
+      get: "/v1/parkingSlots",
+    };
+  }
+
+  rpc UpdateParkingSlot(UpdateParkingSlotRequest) returns (UpateParkingSlotReply){
+    option (google.api.http) = {
+      put: "/v1/parkingSlot/{parkingSlotId}",
+      body: "*"
+    };
+  }
+}
+
+message CreateParkingSlotRequest {
+  string parkingSlotName = 1;
+}
+
+message CreateParkingSlotReply {
+  ParkingSlot parkingSlot = 1;
+}
+
+message DeleteParkingSlotByIdRequest {
+  int32 parkingSlotId = 1;
+}
+
+message DeleteParkingSlotByIdReply {
+  bool success = 1;
+}
+
+message GetParkingSlotsReply{
+  repeated ParkingSlot parkingSlots = 1;
+}
+
+message UpateParkingSlotReply {
+  bool success = 1;
+}
+
+message UpdateParkingSlotRequest {
+  int32 parkingSlotId = 1;
+  string parkingSlotName = 2;
+}
+
+message ParkingSlot {
+  int32 parkingSlotId = 1;
+  string parkingSlotName = 2;
+}

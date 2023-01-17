@@ -27,6 +27,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "protos", "protos", "{1EF7E407-1CED-49C9-ADCD-3F7251EEA548}"
 	ProjectSection(SolutionItems) = preProject
 		src\Shared\protos\booking.proto = src\Shared\protos\booking.proto
+		src\Shared\protos\parking-slot.proto = src\Shared\protos\parking-slot.proto
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "google", "google", "{A686C386-3578-400C-9B33-3AC5CC096C2C}"
