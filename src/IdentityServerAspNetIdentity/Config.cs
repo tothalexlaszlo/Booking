@@ -14,7 +14,13 @@ public static class Config
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
         {
-                new ApiScope(name: "booking_api", displayName: "Booking API")
+            new ApiScope(name: "booking_api", displayName: "Booking API")
+        };
+
+    public static IEnumerable<ApiResource> ApiResources =>
+        new[]
+        {
+            new ApiResource("booking_api", "\"booking_api\" #1") { Scopes = {"booking_api"} }
         };
 
     public static IEnumerable<Client> Clients =>
@@ -46,6 +52,18 @@ public static class Config
                     "booking_api"
                 },
                 RequireClientSecret = false
+            },
+            new Client
+            {
+                ClientId = "demo_api_swagger",
+                ClientName = "Swagger UI for demo_api",
+                ClientSecrets = {new Secret("secret".Sha256())}, // change me!
+                AllowedGrantTypes = GrantTypes.Code,
+                RequirePkce = true,
+                RequireClientSecret = false,
+                RedirectUris = {"http://localhost/swagger/oauth2-redirect.html"},
+                AllowedCorsOrigins = { "http://localhost", "https://localhost"},
+                AllowedScopes = { "booking_api" }
             }
         };
 }
